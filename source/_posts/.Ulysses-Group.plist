@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>createMarkedFile</key>
+	<false/>
+	<key>sheetClusters</key>
+	<array>
+		<array>
+			<string>ebook-services-collection.md</string>
+		</array>
+		<array>
+			<string>filmstrip.md</string>
+		</array>
+		<array>
+			<string>first-scrapy.md</string>
+		</array>
+		<array>
+			<string>gantt-chart.md</string>
+		</array>
+		<array>
+			<string>github-profile-card.md</string>
+		</array>
+		<array>
+			<string>italian-startups.md</string>
+		</array>
+		<array>
+			<string>moible-web-debugging-with-weinre.md</string>
+		</array>
+		<array>
+			<string>movie-visualizations.md</string>
+		</array>
+		<array>
+			<string>personalized-news.md</string>
+		</array>
+		<array>
+			<string>text-masking-with-sketch.md</string>
+		</array>
+		<array>
+			<string>zenurl-prototyping-with-keynote.md</string>
+		</array>
+	</array>
+	<key>userIconName</key>
+	<string>Sheets</string>
+</dict>
+</plist>
