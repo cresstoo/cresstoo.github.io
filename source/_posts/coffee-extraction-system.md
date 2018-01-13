@@ -1,6 +1,6 @@
 title: 如何建立一套可靠的咖啡萃取体系
 date: 2018-01-13 13:00:51
-tags:coffee
+tags: coffee
 ---
 
 在入了精品咖啡的坑一段时间之后，我逐渐意识到只是简单死记硬背[金杯法则](http://www.scaa.org/?page=resources&d=brewing-best-practices)或者复制别人的冲煮操作都是不可取的。而不了解萃取原理，只是通过反复调整冲煮参数地“盲测”积累经验也是极为低效的。
