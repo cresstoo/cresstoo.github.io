@@ -4,6 +4,8 @@ tags: sketch
 ---
 很久没画了，树的阴影是乱来的。
 
+<!-- more -->
+
 ![image](http://7qn9uj.com1.z0.glb.clouddn.com/media/bladerunner2049_sceneorange.png)
 ![image](http://7qn9uj.com1.z0.glb.clouddn.com/media/bladerunner2049_scenegray.png)
 

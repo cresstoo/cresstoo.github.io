@@ -2,11 +2,11 @@ title: Sketch练习 - Wallet
 date: 2015-08-16 18:10:20
 tags: [sketch, prototyping]
 ---
+一个钱包界面练习，偷师自[Dompet - Wallet App](https://dribbble.com/shots/2153963-Dompet-Wallet-App)
+
 <!-- more -->
 
 ![image](http://7qn9uj.com1.z0.glb.clouddn.com/media/wallet.jpg)
-
-偷师自[Dompet - Wallet App](https://dribbble.com/shots/2153963-Dompet-Wallet-App)
 
 后来才发现人家有源文件，于是乎研究了一下，原作者画donut chart方式比我的高级多了，利用三角形可以精确控制比例分布。
 

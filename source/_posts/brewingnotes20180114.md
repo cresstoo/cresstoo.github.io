@@ -3,6 +3,8 @@ date: 2018-01-14 13:42:17
 tags: [coffee, brewingnotes]
 ---
 
+冬天就要喝深烘！
+
 <!-- more -->
 
 ### 咖啡豆

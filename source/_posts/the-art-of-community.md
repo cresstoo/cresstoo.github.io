@@ -3,9 +3,9 @@ date: 2018-01-10 17:29:47
 tags: [readingnotes, community, socialnetwork]
 ---
 
-<!-- more -->
-
 [社群运营的艺术](https://book.douban.com/subject/27101605/) / 作者: 查尔斯·沃格
+
+<!-- more -->
 
 ### **理解社群**
 #### **1. 共同价值观**
