@@ -16,7 +16,7 @@
     "hexo-generator-tag": "^0.2.0",
     "hexo-migrator-rss": "~0.1.2",
     "hexo-renderer-ejs": "*",
-    "hexo-renderer-marked": "^0.2.11",
+    "hexo-renderer-markdown-it-plus": "^1.0.2",
     "hexo-renderer-scss": "^1.1.0",
     "hexo-renderer-stylus": "^0.2.3",
     "hexo-server": "^0.2.2"
