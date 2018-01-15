@@ -9,6 +9,6 @@ layout: page
 
 ### 本站黑历史
 
-- 2004年-2007年，从blogcn开始blog生涯，折腾了大陆台湾日本美国大概20几个BSP。
-- 2007年-2014年，加入[神秘组织GeoWHY](https://site.douban.com/geowhy/room/13493/)，托管在美国服务器，注册域名supercress.cn。
-- 2014年-Now，迁移到Hexo，托管在Github，注册域名duran.im。
+- 2004年-2007年，从`blogcn`开始blog生涯，折腾了大陆台湾日本美国大概20几个BSP。
+- 2007年-2014年，加入[神秘组织GeoWHY](https://site.douban.com/geowhy/room/13493/)，托管在美国服务器，注册域名`supercress.cn`。
+- 2014年-Now，迁移到Hexo，托管在Github，注册域名`duran.im`。

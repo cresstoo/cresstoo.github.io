@@ -1,7 +1,9 @@
 title: Sketch练习 - Wallet
 date: 2015-08-16 18:10:20
-tags: Sketch
+tags: [sketch, prototyping]
 ---
+<!-- more -->
+
 ![image](http://7qn9uj.com1.z0.glb.clouddn.com/media/wallet.jpg)
 
 偷师自[Dompet - Wallet App](https://dribbble.com/shots/2153963-Dompet-Wallet-App)

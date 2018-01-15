@@ -1,6 +1,6 @@
 title: Github Profile Card Redesign
 date: 2014-12-17 03:05:08
-tags: [github, sketch, UI]
+tags: [github, sketch]
 ---
 
 最近开始一个新项目，重设计一些网络服务的profile卡片。从Github开始，参考了[octocard](http://octocard.in/) 的布局，用的偶像Mike Bostock的repo资料哈哈。

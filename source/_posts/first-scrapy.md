@@ -1,9 +1,10 @@
 title: Scrapy爬虫工具入门尝试
 date: 2013-05-27 01:08:20
-tags: [scrapy, python]
+tags: [scrapy, python, coding]
 ---
 [Scrapy](http://scrapy.org/)是一款纯Python爬虫框架，安装使用据说都很方便。作为一个编程白痴，一边看官方文档上手，一边恶补基础概念，遇到问题就用stackoverflow搜索，经过3天折腾终于基本实现了初步的抓取目标：抓取外交部某栏目下的某一篇新闻的所有正文文字，保存到本地。
-<!--more-->
+
+<!-- more -->
 
 ### 目标网页
 http://www.fmprc.gov.cn/mfa_chn/wjdt_611265/fyrbt_611275/t1040553.shtml

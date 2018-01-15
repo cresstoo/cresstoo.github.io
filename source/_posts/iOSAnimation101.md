@@ -2,9 +2,11 @@ title: iOS动画入门学习
 
 date: 2015-07-29 18:19:24
 
-tags: [Swift, Animation]
+tags: [swift, animation, coding]
 -----
 学习了林永坚老师的[iOS动画入门](http://www.imooc.com/learn/392)、[iOS动画进阶](http://www.imooc.com/learn/395)两个课程，包含iOS几种基础动画的实现方法。
+
+<!-- more -->
 
 ### iOS基本动画方法
 

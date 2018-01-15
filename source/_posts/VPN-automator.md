@@ -1,8 +1,10 @@
 title: 用Automator实现开机自动连接VPN
 date: 2014-12-14 17:33:52
-tags: AppleScript
+tags: [AppleScript, coding]
 ---
 自从Dropbox被墙之后，同步就成了一件很肉的事，而我总是忘记开VPN把文件同步到最新。为了搞一个工作流必须保证Dropbox一打开就自动同步，于是利用Mac自带的Automator中执行AppleScript来完成一个开机自动连接动作。
+
+<!-- more -->
 
 ### STEP 1 
 打开Automator，新建`应用程序`

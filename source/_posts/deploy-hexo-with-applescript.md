@@ -1,8 +1,10 @@
 title: 通过AppleScript快速创建和发布Hexo文章
 date: 2017-12-21 14:51:01
-tags: [AppleScript, Hexo]
+tags: hexo
 ---
 因为给2018年定了一个要做**输出型人**的小目标，最近又开始对搁置了2年的博客不折腾不舒服斯基了。
+
+<!-- more -->
 
 先是由于换了电脑，重装nodejs和npm，Hexo从2.0升级到了3.0，按照[官方指引](https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0)完成了升级迁移。经过2年的变化，本人早就换了Bear作为主力笔记软件，还付费订阅了一年的服务。昨天折腾的时候发现Bear导出的Markdown文档meta信息乱掉了，分隔符会从`---` 变成 `- - - -`  从而导致发布显示错误。无奈之下只能放弃Bear作为Hexo文章编辑器，转向轻量级的专业Markdown编辑器Typora。
 

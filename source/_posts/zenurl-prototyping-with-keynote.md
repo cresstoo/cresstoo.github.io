@@ -1,8 +1,10 @@
 title: 用Keynote做交互原型：模拟短网址服务
 date: 2014-11-27 03:05:08
-tags: [Keynote, Animation, Prototyping]
+tags: [keynote, animation, prototyping]
 ---
 想搭建一个自己的短网址服务，URL生成的交互想用翻转效果，用Keynote快速制作出了高保真原型动画。模拟了网址输入、按钮hover、按钮变形、文字和输入框翻转，生成的Gif帧率有点快，看Keynote要清楚些。
+
+<!-- more -->
 
 ### Static box version
 

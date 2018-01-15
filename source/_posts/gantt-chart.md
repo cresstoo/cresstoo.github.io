@@ -1,6 +1,6 @@
 title: 用Highcharts制作特殊甘特图
 date: 2014-05-09 13:32:32
-tags: [highcharts, javascript]
+tags: [highcharts, javascript, coding, dataviz]
 ---
 ### 关于Highcharts
 
