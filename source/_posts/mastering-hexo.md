@@ -1,11 +1,14 @@
 title: Hexo驯服记
-date: 2018-01-15 17:59:39
+date: 2018-05-24 17:59:39
+
+description: 持续记录如何折腾Hexo
+
 tags: [Hexo, blog]
 ---
 
-> 折腾hexo的各种记录
+>  2014年开始折腾Hexo，感谢作者大大和社区，让我通过Hexo学习了Git的基本操作。
 
-## 多机同步混乱
+## 一、多机同步混乱
 
 工作和家用两台电脑电脑或者旧电脑换新电脑，如果想要同时维护博客，就很容易发生同步混乱。
 
@@ -24,7 +27,7 @@ tags: [Hexo, blog]
 
 这里的最佳思路是在yourname.github.io仓库下使用2个分支，默认分支用于同步上面说的那些个人数据源文件，次分支来同步渲染静态页面（古典做法）。因为Github版本控制远远优于Dropbox。
 
-具体步骤如下
+**具体步骤如下**
 
 ### 第一步，旧电脑上配置流程
 
@@ -36,14 +39,12 @@ tags: [Hexo, blog]
 
 2. 编辑本地配置文件`_config.yml`，将默认分支设置为master
 
-   ```yaml
+```yaml
    deploy:
      type: git
      repo: git@github.com:yourname/yourname.github.io.git
      branch: master
-   ```
-
-   
+```
 
 3. 删除根目录和主题目录下的.git文件夹（*主题目录这个有坑，解决办法见后）
 
@@ -64,27 +65,27 @@ git push -u origin master
 
 ### 第二步，新电脑建站流程
 
-1. 安装配置Git环境
+1. 安装配置Git环境，不赘述了
 
 2. 建议使用SSH而不是HTTP方式来访问服务器，因此需要更新本机SSH key到GitHub账号下，参考[官方指南](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)即可。
 
 3. 安装Nodejs（或者当然最好用nvm来管理Nodejs）
 
 4. 下载博客源文件
-
-   ```shell
+  
+```shell
    git clone git@github.com:yourname/yourname.github.io.git 
-   ```
+```
 
-   安装Hexo，但不要执行hexo init初始化，否则就重复建站了
+5. 安装Hexo，但不要执行hexo init初始化，否则就重复建站了   
 
-   ```shell
+```shell
    npm install -g hexo-cli
    npm install
    npm install hexo-deployer-git --save
    # 如果使用git submodule管理主题，加一步：
    # git submodule update --init --recursive
-   ```
+```
 
    至此新旧电脑数据完全一致
 
@@ -94,11 +95,11 @@ git push -u origin master
 
 2. 确认本地源文件更新为最新
 
-   ```shell
+```shell
    git pull
    # 如果使用git submodule管理主题，加一步：
    # git submodule update
-   ```
+```
 
 3. 进行正常的新建或者修改博客，比如新建一篇博客 `hexo new post`，或者修改配置文件
 
@@ -125,13 +126,13 @@ hexo deploy
 
 参考资料
 
-> [知乎：使用hexo，如果换了电脑怎么更新博客修改](https://www.zhihu.com/question/21193762)
+> [使用hexo，如果换了电脑怎么更新博客修改](https://www.zhihu.com/question/21193762)
 >
 > [hexo多设备同步与版本控制实现](http://zealscott.com/posts/1708/)
 >
 > [Hexo-Github建博客教程](https://yaro97.github.io/2017/01/07/Hexo-Github%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/)
 
-## 第三方主题管理问题
+## 二、第三方主题管理问题
 
 Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下载到theme文件夹内，由于这些theme本身就是一个repo，自带的.git会和Hexo的母.git冲突，本地修改之后，无法push到GitHub远端。
 
@@ -143,9 +144,9 @@ Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下�
 
 2. 为主题创建一个submodule
 
-   ```shell
-   git submodule add https://github.com/ahonn/hexo-theme-even themes/even
-   ```
+```shell
+git submodule add https://github.com/ahonn/hexo-theme-even themes/even
+```
 
 3. 创建完毕后，GitHub上的even会多一个尾巴
 
@@ -153,12 +154,12 @@ Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下�
 
 4. 至此submodule配置完毕，今后在不同电脑之前同步主题只需要
 
-   ```shell
+```shell
    git pull
    git submodule update
    # 如果是全新电脑安装完hexo之后 再执行一步：
    # git submodule update --init
-   ```
+```
 
    最后只剩一个问题，如果原作者更新了主题，就采取常规git fork合并冲突的方法。一般很少更新，就不详细描述了。
 
@@ -170,17 +171,17 @@ Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下�
 >
 > [Fork别人的主题代码 原作者更新后如何同步](https://blog.csdn.net/lw_chen/article/details/51239657)
 
-## 愚蠢的markdown标点符号错误
+## 三、愚蠢的markdown标点符号错误
 
 这是一个很蠢的问题，Hexo生成的新mardown文件，会自动有一个tag行，但`tag: []`和后面的标签、方括号之间是应该要有空格，否则提交渲染的时候会提示渲染失败。
 
-错误示范
+**错误示范**
 
 单个标签tag:abc  
 
 多个标签tag:[abc, def]
 
-正确示范
+**正确示范**
 
 单个标签tag: abc 
 
@@ -188,7 +189,7 @@ Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下�
 
 类似蠢问题，[这位也遇到了](http://www.swiftyper.com/2017/07/30/hexo-tip-do-not-using-square-brace-in-title/)，就是不要在标题行用方括号。
 
-## hexo-renderer-marked插件没删干净
+## 四、hexo-renderer-marked插件没删干净
 
 这算是一个hexo renderer的小bug，升级Hexo3.x以后，旧版hexo-renderer-marked需要手工卸载删除，否则会导致文章渲染失败。
 
@@ -196,22 +197,22 @@ Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下�
 npm uninstall hexo-renderer-marked --save
 ```
 
-## GitHub Pages HTTPS的配置bug
+## 五、GitHub Pages HTTPS的配置bug
 
 GitHub Pages开始支持免费解析HTTPS，但按照官方指导会出现`Enforce HTTPS` 选项置灰无法勾选的情况。这应该是个bug。
 
 ![](http://7qn9uj.com1.z0.glb.clouddn.com/media/enforcehttps01.png)
 
-问题解决
+**问题解决**
 
 1. 首先到域名服务商那里删掉以前DNS的A记录，重新解析到新的IP地址
 
-   ```ip
+```ip
    185.199.108.153
    185.199.109.153
    185.199.110.153
    185.199.111.153
-   ```
+```
 
 2. 尽管你的域名服务商表示已经解析完成，但GitHub可能要过2天左右才能完成解析，如果一直显示：
 
