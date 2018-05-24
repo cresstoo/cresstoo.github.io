@@ -3,11 +3,9 @@ layout: page
 ---
 ### 关于我
 
-我是cress，常年在理性与感性之间游走，乱点技能树，家有[三只猫](https://www.instagram.com/p/BK0Tm-ZgWya/?taken-by=kuresu)。这里是我的个人学习思考记录之地。
+我是DuRan，网名cress，[INTP](https://zh.wikipedia.org/wiki/INTP)/[INTJ](https://zh.wikipedia.org/wiki/INTJ)+[RAI](https://zh.wikipedia.org/wiki/%E9%9C%8D%E7%88%BE%E8%98%AD%E5%85%AD%E9%82%8A%E5%BD%A2)，[黑猫控](https://www.instagram.com/p/BK0W7-oA1qT/?taken-by=kuresu)。学的电影却做了产品工作，梦想是成为某种工人，目前还在探索中。
 
-一些标签：MBTI类型INTP/J，霍兰德类型RAI，
-
-兴趣领域：扭蛋，爬火山，Self-Management，产品管理和创新，经济学和心理学，[精品咖啡](http://duran.im/tags/coffee/)，Ukulele，[Sketch](http://duran.im/tags/sketch/)，~~编程，信息可视化，意大利语，下厨，新闻传播，摄影，写作，电影学~~。
+兴趣广泛：人的科学（心理学经济学管理学），Sketch，Ukulele，精品咖啡，扭蛋，乐高，爬火山，下厨，后摇，~~学编程，可视化，意大利语，修电脑，胶片摄影，艺术史，电影学，二次元~~。
 
 ### 本站黑历史
 
