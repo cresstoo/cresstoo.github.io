@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>I&#39;M DURAN</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://duran.im/"/>
+  <updated>2018-08-06T06:45:24.109Z</updated>
+  <id>https://duran.im/</id>
+  
+  <author>
+    <name>cress</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo驯服记</title>
+    <link href="https://duran.im/2018/05/24/mastering-hexo/"/>
+    <id>https://duran.im/2018/05/24/mastering-hexo/</id>
+    <published>2018-05-24T09:59:39.000Z</published>
+    <updated>2018-08-06T06:45:24.109Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>2014年开始折腾Hexo，感谢作者大大和社区，让我通过Hexo学习了Git的基本操作。</p></blockquote><h2 id="一-多机同步混乱"><a class="markdownIt-Anchor" href="#一-多机同步混乱"></a> 一、多机同步混乱</h2><p>工作和家用两台电脑电脑或者旧电脑换新电脑，如果想要同时维护博客，就很容易发生同步混乱。</p><h3 id="思路git分支大法实现云端同步"><a class="markdownIt-Anchor" href="#思路git分支大法实现云端同步"></a> 思路：Git分支大法实现云端同步</h3><p>首先搞清楚Hexo系统下和个人有关的数据文件，实际只包括：</p><ul><li>根目录下的站点配置文件<code>_config.yml</code></li><li>主题文件夹<code>theme/</code></li><li>文章源文件夹<code>source/</code></li><li>文章模板文件夹<code>scaffolds/</code></li><li>依赖包数据文件<code>package.json</code></li><li>忽略提交的配置文件<code>.gitignore</code></li></ul><p>因此如果需要更换电脑或者新增作业电脑，只需要保存好以上几个文件夹，将它们备份到云端可以一劳永逸解决换电脑之忧。但Dropbox、百度云盘这种文件同步系统是不怎么可靠的，一旦同步失败你都不知道哪个版本才是最新的。</p><p>这里的最佳思路是在yourname.github.io仓库下使用2个分支，默认分支用于同步上面说的那些个人数据源文件，次分支来同步渲染静态页面（古典做法）。因为Github版本控制远远优于Dropbox。</p><p><strong>具体步骤如下</strong></p><h3 id="第一步旧电脑上配置流程"><a class="markdownIt-Anchor" href="#第一步旧电脑上配置流程"></a> 第一步，旧电脑上配置流程</h3><p>（假设GitHub已有名为yourname.github.io仓库，旧电脑博客目录名为hexoblog，且已升级为最新Hexo3.x）</p><ol><li><p>在GitHub的yourname.github.io上新建hexo分支，并设置为默认分支</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/defaultbranch.png" alt=""></p></li><li><p>编辑本地配置文件<code>_config.yml</code>，将默认分支设置为master</p></li></ol><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">git@github.com:yourname/yourname.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure><ol start="3"><li><p>删除根目录和主题目录下的.git文件夹（*主题目录这个有坑，解决办法见后）</p></li><li><p>编辑根目录下的<code>.gitignore</code>  ，添加一行<code>public/</code>，目的是不用重复提交静态网页（已经在master分支了）</p></li><li><p>将本地源文件更新到GitHub</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="meta">#</span><span class="bash"> 初始化git</span></span><br><span class="line">git add. </span><br><span class="line">git commit -m "new branch"</span><br><span class="line">git remote add origin git@github.com:yourname/yourname.github.io.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关联远端hexo分支</span></span><br><span class="line">git push -u origin master</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果报错，换git pull --rebase origin master</span></span><br></pre></td></tr></table></figure><h3 id="第二步新电脑建站流程"><a class="markdownIt-Anchor" href="#第二步新电脑建站流程"></a> 第二步，新电脑建站流程</h3><ol><li><p>安装配置Git环境，不赘述了</p></li><li><p>建议使用SSH而不是HTTP方式来访问服务器，因此需要更新本机SSH key到GitHub账号下，参考<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/" target="_blank" rel="noopener">官方指南</a>即可。</p></li><li><p>安装Nodejs（或者当然最好用nvm来管理Nodejs）</p></li><li><p>下载博客源文件</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:yourname/yourname.github.io.git</span><br></pre></td></tr></table></figure><ol start="5"><li>安装Hexo，但不要执行hexo init初始化，否则就重复建站了</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果使用git submodule管理主题，加一步：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git submodule update --init --recursive</span></span><br></pre></td></tr></table></figure><p>至此新旧电脑数据完全一致</p><h3 id="第三步日常博客修改和发布"><a class="markdownIt-Anchor" href="#第三步日常博客修改和发布"></a> 第三步，日常博客修改和发布</h3><ol><li><p>在hexo目录下执行<code>git checkout hexo</code>，保证当前本地分支为默认分支hexo</p></li><li><p>确认本地源文件更新为最新</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果使用git submodule管理主题，加一步：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git submodule update</span></span><br></pre></td></tr></table></figure><ol start="3"><li><p>进行正常的新建或者修改博客，比如新建一篇博客 <code>hexo new post</code>，或者修改配置文件</p></li><li><p>发布所有修改到GitHub hexo分支</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add . </span><br><span class="line">git commit -m "add a new post" </span><br><span class="line">git push origin hexo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这里不是push到master，别搞错了</span></span><br></pre></td></tr></table></figure><ol start="5"><li>不用切换分支，将渲染好的静态文件发布到GitHub master分支，完成网站发布</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line"><span class="meta">#</span><span class="bash">清除缓存</span></span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者hexo g -d</span></span><br></pre></td></tr></table></figure><p>实际上还有一些省事的办法，只是为了加深对git命令的记忆，我还是选择了这个解决方案。</p><p>参考资料</p><blockquote><p><a href="https://www.zhihu.com/question/21193762" target="_blank" rel="noopener">使用hexo，如果换了电脑怎么更新博客修改</a></p><p><a href="http://zealscott.com/posts/1708/" target="_blank" rel="noopener">hexo多设备同步与版本控制实现</a></p><p><a href="https://yaro97.github.io/2017/01/07/Hexo-Github%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener">Hexo-Github建博客教程</a></p></blockquote><h2 id="二-第三方主题管理问题"><a class="markdownIt-Anchor" href="#二-第三方主题管理问题"></a> 二、第三方主题管理问题</h2><p>Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下载到theme文件夹内，由于这些theme本身就是一个repo，自带的.git会和Hexo的母.git冲突，本地修改之后，无法push到GitHub远端。</p><p>如果你坚持使用git clone或者直接下载release包，那么可以简单粗暴删掉主题文件夹下的 .git 和.gitignore文件，坏处是如果原主题作者更新了你得自己再次手动下载重新配置主题文件。如果你不记得之前的配置改动，比如某个css里几个高度，可能就会导致主题乱掉。</p><p>另一种更优雅的办法是使用<code>git submodule</code>，把主题仓库当作博客仓库的一个子仓库，单独进行版本管理和同步。</p><ol><li><p>Fork 一份作者的主题到自己的GitHub上，例如even这个主题</p></li><li><p>为主题创建一个submodule</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/ahonn/hexo-theme-even themes/even</span><br></pre></td></tr></table></figure><ol start="3"><li><p>创建完毕后，GitHub上的even会多一个尾巴</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/submodule.png" alt=""></p></li><li><p>至此submodule配置完毕，今后在不同电脑之前同步主题只需要</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line">git submodule update</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果是全新电脑安装完hexo之后 再执行一步：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git submodule update --init</span></span><br></pre></td></tr></table></figure><p>最后只剩一个问题，如果原作者更新了主题，就采取常规git fork合并冲突的方法。一般很少更新，就不详细描述了。</p><p>参考资料</p><blockquote><p><a href="http://www.swiftyper.com/2017/07/25/managing-hexo-theme-using-submodule" target="_blank" rel="noopener">使用 submodule 管理 Hexo 主题</a></p><p><a href="https://qbug.cf/2017/07/31/submodule-%E8%A7%A3%E5%86%B3-hexo-%E4%B8%BB%E9%A2%98%E5%BA%93%E6%9B%B4%E6%96%B0/" target="_blank" rel="noopener">Submodule 解决 Hexo 主题库更新</a></p><p><a href="https://blog.csdn.net/lw_chen/article/details/51239657" target="_blank" rel="noopener">Fork别人的主题代码 原作者更新后如何同步</a></p></blockquote><h2 id="三-愚蠢的markdown标点符号错误"><a class="markdownIt-Anchor" href="#三-愚蠢的markdown标点符号错误"></a> 三、愚蠢的markdown标点符号错误</h2><p>这是一个很蠢的问题，Hexo生成的新mardown文件，会自动有一个tag行，但<code>tag: []</code>和后面的标签、方括号之间是应该要有空格，否则提交渲染的时候会提示渲染失败。</p><p><strong>错误示范</strong></p><p>单个标签tag:abc</p><p>多个标签tag:[abc, def]</p><p><strong>正确示范</strong></p><p>单个标签tag: abc</p><p>多个标签tag: [abc, def]</p><p>类似蠢问题，<a href="http://www.swiftyper.com/2017/07/30/hexo-tip-do-not-using-square-brace-in-title/" target="_blank" rel="noopener">这位也遇到了</a>，就是不要在标题行用方括号。</p><h2 id="四-hexo-renderer-marked插件没删干净"><a class="markdownIt-Anchor" href="#四-hexo-renderer-marked插件没删干净"></a> 四、hexo-renderer-marked插件没删干净</h2><p>这算是一个hexo renderer的小bug，升级Hexo3.x以后，旧版hexo-renderer-marked需要手工卸载删除，否则会导致文章渲染失败。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br></pre></td></tr></table></figure><h2 id="五-github-pages-https的配置bug"><a class="markdownIt-Anchor" href="#五-github-pages-https的配置bug"></a> 五、GitHub Pages HTTPS的配置bug</h2><p>GitHub Pages开始支持免费解析HTTPS，但按照官方指导会出现<code>Enforce HTTPS</code> 选项置灰无法勾选的情况。这应该是个bug。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/enforcehttps01.png" alt=""></p><p><strong>问题解决</strong></p><ol><li>首先到域名服务商那里删掉以前DNS的A记录，重新解析到新的IP地址</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">185.199.108.153</span><br><span class="line">185.199.109.153</span><br><span class="line">185.199.110.153</span><br><span class="line">185.199.111.153</span><br></pre></td></tr></table></figure><ol start="2"><li><p>尽管你的域名服务商表示已经解析完成，但GitHub可能要过2天左右才能完成解析，如果一直显示：</p><blockquote><p>Enforce HTTPS — Not yet available for your site because the certificate has not finished being issued</p></blockquote></li><li><p>你就再等1天警告才会消失 ，但<code>Enforce HTTPS</code> 选项可能依然是灰的，这就是GitHub的bug了。这时候需要删掉已经填写好的域名，点一次<code>Save</code>，方框就可以勾选了</p></li><li><p>重新添加一次域名，同时勾选上<code>Enforce HTTPS</code> 之后再点<code>Save</code>。成功</p></li><li><p>之后https可以访问了但会提示证书无效，依然要过一段时间才能变绿</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/enforcehttps02.png" alt=""></p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      持续记录如何折腾Hexo
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="https://duran.im/tags/Hexo/"/>
+    
+      <category term="blog" scheme="https://duran.im/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>失业庐中记：成长，快与慢</title>
+    <link href="https://duran.im/2018/03/12/growth-fast-and-slow/"/>
+    <id>https://duran.im/2018/03/12/growth-fast-and-slow/</id>
+    <published>2018-03-12T10:13:38.000Z</published>
+    <updated>2018-08-06T06:45:24.108Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>正式主动失业了，想利用这段间歇期好好反思下自己的职业生涯，并不是线性叙事。</p></blockquote><p>待得最短的两家公司分别是2个月和7个月，而且是为了去7个月这家公司离开了2个月这家公司。从职业发展角度这两个决定是幼稚草率的，理由也很愚蠢。当时自己正处于职业转型的迷茫期，又在病床上趟了大半年，所以在后来一年时间内换了2个工作还换了2次城市。然而矛盾的是，这9个月是自己职业生涯最值得回味的日子。</p><p>2个月公司第一次让我看到在一家优秀创业公司和一群优秀的人做产品的样子，7个月公司则让我看到在一家优秀创业公司和一群优秀的人做大家都热爱的产品的样子。</p><p>2个月公司是快公司文化，2个月时间足够让我做很多事情、看到很多事情。我提前1个月过了试用期，2个月时间我考过了GA，学了PHP和SQL入门，参与了3次改版，接听了上百通客服电话，认识公司每一个人，和前辈们一起研究怎么为社区增加人情味，看到3个工程师自发关小黑屋重构平台代码，跟CTO、CFO、CMO坐在一个小屋子里制定新项目的战略规划。公司员工文艺又Geek，作为一家上海公司又极其务实。生意本身却比公司文化庸俗多了，公司成立很多年了，客服中心每天接到最多的用户电话依然是各种投诉和辱骂。</p><p>有一天结束电话调研，我垂头丧气地问我的mentor产品总监York：“我们的平台上都是骗子，用户不理解我们只会骂网站不好。最关键是你看，产品大部分功能我们自己都不会用的。你是怎么说服自己去做一个自己都不爱用的产品呢？”York是典型技术男转产品，“我知道，我们网站看起来很low，我们的生意看起来很low，我们的用户看起来也很low。我自己找工作肯定不会用我们网站(笑)。可是你看，如果没有人给这些low low的用户做出一些他们用得起、会用的网站，他们只会被线下的人骗得更狠，他们找到想找的东西会更困难。如果由我们来把产品做好了，把骗子打败了，让我们真正的用户开开心心，就是对他们最大的帮助。能帮助他人的事情，是不需要被说服的。至于坚持用自己公司的产品，这是产品经理必须的职业要求。无论是否相信公司的理念，也别忘了经常提醒自己多用自己的产品。”</p><p>过了几天，CEO召开了公司大会，宣布重新定义几类用户的价值和战略，向习惯于旧模式而陷入迷茫中各个团队传达了新的使命。</p><p>而我当时还是很想知道做自己也很热爱产品是什么样子，带着对2个月公司深深的感恩离开了上海，去了7个月公司。</p><p>7个月公司是慢公司文化，现在回忆起来更多的是，同事又长又冷的文学梗、家庭酒局饺子宴、球赛和放映会、尾牙演出彩排这些和工作无关的片段。当时觉得这里的每个人都要么酷，要么可爱，要么美丽，跟动物园一样（笑）。我终于能在一家喜欢的优秀公司和一群喜欢的优秀同事做一个自己也很喜欢的产品，唯一的遗憾是因为当初太想来这家公司，接受的是非产品岗位，最终没能有机会做产品。</p><p>如果在2个月公司是一部自上而下高速运转的机器，7个月公司则是一块自下而上包产到户的耕地（笑）。这里的管理风格大概是一种“无为而治”，没有外部焦虑的干扰，拿到一块地和一粒种子，产品技术运营每个人都可以为长出什么树贡献自己的创意和特长，最后这棵树一定拥有的是同一种气质：精神追求让人变得有趣，也让你认识更多有趣的人。外部的质疑和吐槽似乎没有怎么动摇对这种气质的追求。我们当时深信于此，所以产品技术极力树立行业新高的工业标准，运营BD从零培育一个新市场。在这里，有时候事情的界限是模糊的，我做了PR的工作又开始做很多运营的工作，从混乱无序中建立有序和模型，从有序和模型中找出增长的可能。早期的这些事情真的很慢也很皮毛，但这种志同道合的工作环境，真的很容易让人主动做事，然后你会发现优秀的人也都在主动做事，你会感到更深连接。</p><p>直到深感自己不能对职业方向这么儿戏，刚好有个（其实并不是那么好的）做产品的机会，我才依依不舍地离开了这家公司，依然收获了不少非常要好的朋友，在后来的职业道路上，原来这家公司很多优秀的同事又或多或少地与自己产生交集，各种方式的交流和协助没有停止过。</p><p>在优秀的公司和优秀的人一起honestly地做有价值的产品，价值在于帮助他人更好地生活，而你自己收获快速成长，和远高于账面回报的connection。两家公司的经历当时并没有让我得出这个结论，这是我又经历了一些不优秀的公司治理、不正直的人和价值观缺失的产品，才慢慢看清楚职业成就感到底是怎么一回事。</p>]]></content>
+    
+    <summary type="html">
+    
+      正式主动失业了，想利用这段间歇期好好反思下自己的职业生涯，并不是线性叙事。
+    
+    </summary>
+    
+    
+      <category term="career" scheme="https://duran.im/tags/career/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>手冲记录 - 危地马拉安提瓜</title>
+    <link href="https://duran.im/2018/01/14/brewingnotes20180114/"/>
+    <id>https://duran.im/2018/01/14/brewingnotes20180114/</id>
+    <published>2018-01-14T05:42:17.000Z</published>
+    <updated>2018-08-06T06:45:24.105Z</updated>
+    
+    <content type="html"><![CDATA[<p>冬天就要喝深烘！</p><a id="more"></a><h3 id="咖啡豆"><a class="markdownIt-Anchor" href="#咖啡豆"></a> 咖啡豆</h3><ul><li>产区：危地马拉安提瓜</li><li>等级：SHB</li><li>豆种：波旁</li><li>生豆处理：水洗</li><li>烘焙度：中深烘焙</li></ul><h3 id="冲煮配方"><a class="markdownIt-Anchor" href="#冲煮配方"></a> 冲煮配方</h3><ul><li>研磨颗粒：5.5（小富士）</li><li>粉量：30g</li><li>水温：85度</li><li>水粉比例：1:13</li><li>萃取液重：390g</li></ul><h3 id="设备和时间"><a class="markdownIt-Anchor" href="#设备和时间"></a> 设备和时间</h3><ul><li>滤杯：V60，打湿滤纸后放置常温下</li><li>焖蒸时长：30s</li><li>注水时长：1min，即焖蒸结束到注水结束</li><li>萃取总时长：2min30s，即从焖蒸到滴滤结束</li></ul><h3 id="口感评测"><a class="markdownIt-Anchor" href="#口感评测"></a> 口感评测</h3><ul><li>aroma：黑巧克力香气</li><li>flavour：浓郁炭烧味但苦酸甜均衡，回甘</li><li>acidity：高温入口微微果酸，不突出</li><li>body：温润，饱满，极为顺滑</li><li>after-taste：降温后的回甘更明显，舌根残留烟熏味，跟抽完爆珠一个余韵🕵🏻‍♂️</li></ul><h3 id="本次要点"><a class="markdownIt-Anchor" href="#本次要点"></a> 本次要点</h3><ol><li>放弃加热滤杯，冷滤杯注水实现温度爬坡，风味会更突出。</li><li>加快前期注水速度，多次分段的大水流快速注水，让较粗的咖啡颗粒充分接触水源溶解，但要稳定圆圈不能过分冲击粉层，实现在前30s以内萃取出主要咖啡溶液，1min以内萃取出其他芳香物质。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;冬天就要喝深烘！&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="coffee" scheme="https://duran.im/tags/coffee/"/>
+    
+      <category term="brewingnotes" scheme="https://duran.im/tags/brewingnotes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何建立一套可靠的咖啡萃取体系</title>
+    <link href="https://duran.im/2018/01/13/coffee-extraction-system/"/>
+    <id>https://duran.im/2018/01/13/coffee-extraction-system/</id>
+    <published>2018-01-13T05:00:51.000Z</published>
+    <updated>2018-08-06T06:45:24.106Z</updated>
+    
+    <content type="html"><![CDATA[<p>在入了精品咖啡的坑一段时间之后，我逐渐意识到只是简单死记硬背<a href="http://www.scaa.org/?page=resources&amp;d=brewing-best-practices" target="_blank" rel="noopener">金杯法则</a>或者复制别人的冲煮操作都是不可取的。而不了解萃取原理，只是通过反复调整冲煮参数地“盲测”积累经验也是极为低效的。</p><a id="more"></a><p>咖啡的风味口感虽然是人的主观感觉，但咖啡萃取的本质是一个遵守化学实验规程的物理过程（espresso还有化学反应）。我们知道任何化学实验都应建立一套实验程序，即“目的-假设-变量-方法-步骤-器材”，在了解实验原理和实验对象的基础上实施、对比、控制实验，获得不同实验结果。科学实验有两个美妙之处，验证假设和拓展未知。</p><p>因此，我希望能建立一套可靠的咖啡萃取体系，目的并非指望通过参数化冲煮得到最佳风味，而是拿到任何一款豆子之后，</p><ol><li>让官方预期风味得到验证</li><li>调试出自己喜欢的风味</li><li>拓展出可能性风味</li></ol><p>这即为我的咖啡萃取的实验目的。</p><p>建立一套咖啡萃取体系所需的知识库，大概包括以下内容：</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/coffeeextractionsystem1.0.png" alt="咖啡萃取体系1.0"></p><p>接下来我自己需要补充更多的萃取原理，训练风味感知，了解不同参数调整对风味的具体影响，以手冲体系为练习平台来验证这些可能性。为什么是手冲呢，当然是因为意式根本烧不起啊💰。 其实是因为所有萃取方法里，手冲的可变可控参数是最复杂的（最不稳定的……），能够充分发掘每款豆子的风味啦。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在入了精品咖啡的坑一段时间之后，我逐渐意识到只是简单死记硬背&lt;a href=&quot;http://www.scaa.org/?page=resources&amp;amp;d=brewing-best-practices&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;金杯法则&lt;/a&gt;或者复制别人的冲煮操作都是不可取的。而不了解萃取原理，只是通过反复调整冲煮参数地“盲测”积累经验也是极为低效的。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="coffee" scheme="https://duran.im/tags/coffee/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读书笔记：《社群运营的艺术》</title>
+    <link href="https://duran.im/2018/01/10/the-art-of-community/"/>
+    <id>https://duran.im/2018/01/10/the-art-of-community/</id>
+    <published>2018-01-10T09:29:47.000Z</published>
+    <updated>2018-08-06T06:45:24.113Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://book.douban.com/subject/27101605/" target="_blank" rel="noopener">社群运营的艺术</a> / 作者: 查尔斯·沃格</p><a id="more"></a><h3 id="理解社群"><a class="markdownIt-Anchor" href="#理解社群"></a> <strong>理解社群</strong></h3><h4 id="1-共同价值观"><a class="markdownIt-Anchor" href="#1-共同价值观"></a> <strong>1. 共同价值观</strong></h4><p>社群由共同价值观统一</p><h4 id="2-成员身份"><a class="markdownIt-Anchor" href="#2-成员身份"></a> <strong>2. 成员身份</strong></h4><p>我是谁？我该如何行动？我有怎样的理念？</p><h4 id="3-道德规范"><a class="markdownIt-Anchor" href="#3-道德规范"></a> <strong>3. 道德规范</strong></h4><p>我们要保护什么人或事？哪些东西是不可容忍的？我们与人共享的东西是什么？我们与谁共享这些东西？我们尊敬的人是谁？我们如何将尊敬表现出来？</p><h4 id="4-内部成员的认识"><a class="markdownIt-Anchor" href="#4-内部成员的认识"></a> <strong>4. 内部成员的认识</strong></h4><p>无须再做过多的自我解释，达成默契的“内幕”或者“黑语”</p><h3 id="社群归属感的七条原则"><a class="markdownIt-Anchor" href="#社群归属感的七条原则"></a> 社群归属感的七条原则</h3><h4 id="1-界线成员和外人之间的分界线"><a class="markdownIt-Anchor" href="#1-界线成员和外人之间的分界线"></a> <strong>1. 界线：成员和外人之间的分界线</strong></h4><h4 id="2-入会标记新成员的活动"><a class="markdownIt-Anchor" href="#2-入会标记新成员的活动"></a> <strong>2. 入会：标记新成员的活动</strong></h4><p>最棒的入会仪式是有其标志和符号的<br>邀请创造归属感</p><h4 id="3-仪式我们所进行的有意义的活动"><a class="markdownIt-Anchor" href="#3-仪式我们所进行的有意义的活动"></a> <strong>3. 仪式：我们所进行的有意义的活动</strong></h4><p>所谓仪式，是指任何一项标志着某个时段或某事件的特殊性或重要性的活动。<br>强大的社群会打造正式以及非正式的仪式，它通常依赖特殊的符号，创造归属感、信任感、被欣赏和受欢迎的感觉。</p><h4 id="4-神殿一个专为我们的社群留出的地方"><a class="markdownIt-Anchor" href="#4-神殿一个专为我们的社群留出的地方"></a> <strong>4. “神殿”：一个专为我们的社群留出的地方</strong></h4><p>所谓神殿，是有着共同价值的人们用来举行社群仪式的一个地方。通过举行仪式，可以将任何空间转变为“神殿”。线上社群同样可以打造让成员们找到自己的社群并且能够举行意义重大仪式的“神殿”。大型社群可以有许多重要性不同的分支“神殿”。<br>打造临时神圣空间的方法：</p><ul><li>界线</li><li>邀请</li><li>衣着</li><li>灯光</li><li>声音</li><li>高度</li></ul><h4 id="5故事为了让他人和自己了解我们的价值观而分享的内容"><a class="markdownIt-Anchor" href="#5故事为了让他人和自己了解我们的价值观而分享的内容"></a> <strong>5.故事：为了让他人和自己了解我们的价值观而分享的内容</strong></h4><p>故事是人类进行学习的最有效的方式。故事是现任成员、未来成员以及圈外人了解社群价值观的方式。<br>故事的种类包括：</p><ul><li><p>起源故事，解释了事情是怎样开始的，传递了社群的服务对象和提供服务的原因及方式等信息，传递了社群的价值观。而起源故事只能有一个。</p></li><li><p>分享价值观故事，社群中必须有关于社群的价值观如何表达以及如何影响显示生活的故事。</p></li><li><p>分享关于脆弱感的故事，强大的社群会分享揭露领导者、成员甚至整个社群脆弱的一面的故事，包括我们不愿意对世界袒露的失败、恐惧、感情以及真相，让成员结成坚固纽带。</p><blockquote><p>Brene Brown对关于脆弱感的重要研究参见她的TED演讲<a href="https://www.ted.com/talks/brene_brown_on_vulnerability" target="_blank" rel="noopener"><em>脆弱的力量</em></a>和<a href="https://book.douban.com/subject/11403211/" target="_blank" rel="noopener"><em>Daring Greatly</em></a>这本书。</p></blockquote></li><li><p>分享个人故事，成员需要机会分享自己的故事，这能帮助他们感觉自己得到了关注和理解，也能帮助他们认识社群的共同价值观。</p></li></ul><h4 id="6-符号代表着我们所重视的理念的物品"><a class="markdownIt-Anchor" href="#6-符号代表着我们所重视的理念的物品"></a> <strong>6. 符号：代表着我们所重视的理念的物品</strong></h4><p>符号是建立社群强而有力的工具，因为符号能够很快提醒自己在社群中的价值观、身份以及义务。<br>作为符号的信物，就是一种赠与别人留念的符号，用来代表一种理念、一项活动或是一套价值观。信物往往能提醒人们回忆起某项成就、归属感或是忠诚感。</p><p>信物可以被赠与者灌入价值观：</p><ul><li>意图：告知受领者你赠予信物的原因</li><li>标志性：告诉受领者信物对你代表着什么</li><li>联系未来：告诉受领者你希望这份心无能够对她提供什么支持，让她做出怎样的改变，或是如何服务于她。</li></ul><h4 id="7-内圈我们在社群中的成长路径"><a class="markdownIt-Anchor" href="#7-内圈我们在社群中的成长路径"></a> <strong>7. 内圈：我们在社群中的成长路径</strong></h4><p>入圈的动机：特殊存在、被尊重、被认可价值。<br>藏传佛教的曼陀罗：</p><ul><li>感兴趣的探索者</li><li>学生</li><li>加入社群的成员</li><li>实践者</li><li>宣誓的门外汉</li><li>宣誓的随从或新手</li><li>宣誓的僧侣</li><li>上师及圣贤</li></ul><p>对应社群常用的递进层级大概包括：</p><ul><li>来访者</li><li>新手</li><li>成员</li><li>年长或资深成员</li><li>纯熟的主人和领导者</li></ul><p>成熟的社群会创造出不同级别的内圈，成熟而坚固的社群会提供不同级别的内圈供成员们参与。在每一个级别，成员们都可以获得一些有利于自己成熟或成长的东西。强大的社群会提供一条持续进入内圈的途径（进程）。最具震撼力的途径，反映的是对于他人的关爱的不断“成长”。在层层递进中，我们不断减弱对战绩的关注，对别人的关爱却像不断扩大的圆圈一样逐渐成长，圈子越小越私密，我们对于他人的关爱就越广博。</p><p><strong>执事圈</strong><br>无论正式还是非正式，一个成熟而强大的社群总会设有某种形式的执事圈。<br>在执事圈里存在一个常见的循环周期：非正式的权威人士升级为正式的权威人士，然后再分裂出来在新的社群中重新一圈圈地进步。</p><p><strong>成熟的社区能够引领成长</strong><br>社群提倡成长，帮助成员越来越有效地把控生活的方方面面，也可能是某一项具体技能或是生活的某一方面有所提高。<br>即使没有明确提升某个技能的目标，或多或少都至少有以下2个共同目标：第一个目标是有所归属，能在某个地方得到欢迎，并与其他人沟通交流。归属感是通过“频繁的接触以及持久的关爱”创造出来的。第二个目标是为某人或某事做出贡献。心理学研究表明相比于接受帮助，提供帮助对心理健康的益处更大。</p><p><strong>外部成长与内心成长</strong><br>几乎所有的社群都能教授成员一些外部的知识，最为强大的社群同时也会指导自己的成员如何提高内在健康（内心的成长）。<br>强大的社群传授深奥的知识。在成熟的社群中，至少会存在两种只供内部成员所用或只有内部成员才真正理解的“内幕”。第一种是“数据”（共享信息），第二种是“感知”（体验认识）。</p><h3 id="识别不健康的社群"><a class="markdownIt-Anchor" href="#识别不健康的社群"></a> <strong>识别不健康的社群</strong></h3><h4 id="1-有害异教的共同特征"><a class="markdownIt-Anchor" href="#1-有害异教的共同特征"></a> <strong>1. 有害异教的共同特征</strong></h4><ul><li>只有领导者才具有绝对的道德权威</li><li>领导者对任何人都不负责</li><li>成员必须毫无异议地服从领导者</li><li>异教鼓励与外界隔绝</li><li>退出的壁垒很高</li><li>拥有严重对立的世界观</li><li>最终的道德评判权属于团队</li><li>对于扩充人员的痴迷在团体中风靡</li></ul><h4 id="2-强大社群的健康特征"><a class="markdownIt-Anchor" href="#2-强大社群的健康特征"></a> <strong>2. 强大社群的健康特征</strong></h4><ul><li>领导者具有有限的道德权威</li><li>对于领导者的忠诚要以成员生活中的其他责任为界限和参照</li><li>社群与外界是有交集的</li><li>成员可以随时退出社群</li><li>社群中存在一种与外界相同的世界观</li><li>领导者需要承担责任</li><li>到的许可是有所限制的</li><li>扩充社群与其他优先事项同样重要</li></ul><h3 id="在线管理社群的智慧"><a class="markdownIt-Anchor" href="#在线管理社群的智慧"></a> <strong>在线管理社群的智慧</strong></h3><h4 id="1-在线社群的归属感七条规则举例"><a class="markdownIt-Anchor" href="#1-在线社群的归属感七条规则举例"></a> <strong>1. 在线社群的归属感七条规则举例</strong></h4><ul><li>界线：付费墙、实名、邮箱注册、必答问卷等进入壁垒</li><li>入会：为新成员设置一套欢迎流程。公告、欢迎语、新勋章等。</li><li>仪式：特殊日子、里程碑事件发布消息、共同庆祝</li><li>“神殿”：固定的线上群、BBS，定期的线下聚会</li><li>故事：分享博客、帖子、视频、访谈</li><li>符号：LOGO、成员奖章、表情符号、经验值，太多了……</li><li>内圈：不同身份、群主、版主、管理员、主持人、认证成员</li></ul><h4 id="2-管理社群来自elinor-ostrom的8个原则"><a class="markdownIt-Anchor" href="#2-管理社群来自elinor-ostrom的8个原则"></a> <strong>2. 管理社群，来自Elinor Ostrom的8个原则</strong></h4><ul><li>社群要对界线和意图有一个明确的认识。</li><li>回报和成本要成一定的比例。</li><li>决策是大家共同作出的。决策方式的制定中要有集体参与的成分。</li><li>社群要有效监控违反规定和“搭便车”的人。</li><li>社群要队不遵守社群规范的人设有不同程度的惩处方法。</li><li>解决冲突的机制要廉价而易于使用。</li><li>组织权力只需经过最低程度的认证。</li><li>对于那些隶属于更大族群和网络的团队，相关团队之间的协调必不可缺。</li></ul><p>后文附赠 <a href="http://www.charlesvogl.com/downloads/" target="_blank" rel="noopener">领导者问题清单</a>，可以在作者网站上免费下载</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://book.douban.com/subject/27101605/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;社群运营的艺术&lt;/a&gt; / 作者: 查尔斯·沃格&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="readingnotes" scheme="https://duran.im/tags/readingnotes/"/>
+    
+      <category term="community" scheme="https://duran.im/tags/community/"/>
+    
+      <category term="socialnetwork" scheme="https://duran.im/tags/socialnetwork/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Farnam Street心智模型栅格</title>
+    <link href="https://duran.im/2017/12/26/mental-models/"/>
+    <id>https://duran.im/2017/12/26/mental-models/</id>
+    <published>2017-12-26T08:51:01.000Z</published>
+    <updated>2018-08-06T06:45:24.110Z</updated>
+    
+    <content type="html"><![CDATA[<p>著名的学习博客Farnam Street基于查理·芒格的心智模型栅格方法，<a href="https://www.farnamstreetblog.com/mental-models/" target="_blank" rel="noopener">整理了一系列思考和行动的框架</a>，用来指导人们更好地认识世界，做出更好的决策。我整理成了快速参考表格，部分可点击连接跳转原始博文或百科释义。</p><a id="more"></a><p>阅读和整理最大的感受是，建立心智模型本身就是一种可能会造就启发式认知偏差的方法，对待真知的科学方法应是，从芒格这样的启发者得到“面包屑”，找到面包屑对应的每块面包，再研究面包原始作者、配方、菜谱、吃法，然后上升到去了解面包制作者和他的面包店，要能够了解到不同面包的流派，站在时间轴上看待面包的流行口味和永恒口味。最终，从无尽的分类学研究里抽离出来，build一间属于自己的面包店，与这个世界进行真实而睿智的交锋，无论是要成为美食家，还是自给自足的小店店主，都是可以接受的。</p><h3 id="心智模型-快速参考表格"><a class="markdownIt-Anchor" href="#心智模型-快速参考表格"></a> 心智模型-快速参考表格</h3><table><thead><tr><th style="text-align:left">General Thinking Concepts</th><th>基本思维观念</th></tr></thead><tbody><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2013/10/inversion/" target="_blank" rel="noopener">Inversion</a></td><td>逆向思维</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2014/02/peter-cathcart-wason-falsification/" target="_blank" rel="noopener">Falsification</a> / <a href="https://www.farnamstreetblog.com/2017/05/confirmation-bias/" target="_blank" rel="noopener">Confirmation Bias</a></td><td>证实偏见</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2013/12/mental-model-circle-of-competence/" target="_blank" rel="noopener">Circle of Competence</a></td><td>能力圈</td></tr><tr><td style="text-align:left">The Principle of Parsimony (<a href="https://www.farnamstreetblog.com/2017/05/mental-model-occams-razor/" target="_blank" rel="noopener">Occam’s razor</a>)</td><td>奥卡姆剃刀</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2017/04/mental-model-hanlons-razor/" target="_blank" rel="noopener">Hanlon’s Razor</a></td><td>汉隆剃刀</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2016/04/second-level-thinking/" target="_blank" rel="noopener">Second-Order Thinking</a></td><td>第二序思维</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2015/11/map-and-territory/" target="_blank" rel="noopener">The Map Is Not the Territory</a></td><td>地图非疆域</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2017/06/thought-experiment-how-einstein-solved-difficult-problems/" target="_blank" rel="noopener">Thought Experiments</a></td><td>爱因斯坦的思想实验</td></tr><tr><td style="text-align:left"><a href="https://www.farnamstreetblog.com/2013/11/mr-market/" target="_blank" rel="noopener">Mr. Market</a></td><td>市场先生</td></tr><tr><td style="text-align:left">Probabilistic Thinking (Numeracy/Bayesian Updating)</td><td>概率思维（算术/贝叶斯修正）</td></tr><tr><td style="text-align:left">Default Status</td><td>初始状态</td></tr></tbody></table><table><thead><tr><th>Numeracy</th><th>运算能力</th></tr></thead><tbody><tr><td>Permutations and Combinations</td><td>排列组合</td></tr><tr><td>Algebraic Equivalence</td><td>代数等式</td></tr><tr><td>Randomness</td><td>随机性</td></tr><tr><td>Stochastic Processes (Poisson/Markov/Random Walk)</td><td><a href="https://zh.wikipedia.org/wiki/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B" target="_blank" rel="noopener">随机过程</a>（<a href="https://zh.wikipedia.org/wiki/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B" target="_blank" rel="noopener">泊松过程</a>/<a href="https://zh.wikipedia.org/wiki/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE" target="_blank" rel="noopener">马尔科夫链</a>/<a href="https://zh.wikipedia.org/wiki/%E9%9A%A8%E6%A9%9F%E6%BC%AB%E6%AD%A5" target="_blank" rel="noopener">随机漫步</a>）</td></tr><tr><td>Compounding</td><td>复合效应（复利）</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2016/08/mental-model-multiplicative-systems/" target="_blank" rel="noopener">Multiplying by Zero</a></td><td>乘零效应</td></tr><tr><td>Churn (Red Queen Effect)</td><td>流失，搅动</td></tr><tr><td>Law of Large Numbers</td><td><a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B" target="_blank" rel="noopener">大数定律</a></td></tr><tr><td>Bell Curve/Normal Distribution</td><td>正态分布</td></tr><tr><td><a href="https://en.wikipedia.org/wiki/Power_law" target="_blank" rel="noopener">Power Laws</a></td><td><a href="http://wiki.mbalib.com/wiki/%E5%B9%82%E5%BE%8B" target="_blank" rel="noopener">幂律</a></td></tr><tr><td>Fat-Tailed Processes (Extremistan)</td><td><a href="http://wiki.mbalib.com/wiki/%E8%82%A5%E5%B0%BE%E6%95%88%E5%BA%94" target="_blank" rel="noopener">肥尾效应</a>（极端斯坦）</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2012/12/thomas-bayes-and-bayess-theorem/" target="_blank" rel="noopener">Bayesian Updating</a></td><td>贝叶斯方法</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2015/07/regression-to-the-mean/" target="_blank" rel="noopener">Regression to the Mean</a></td><td>均值回归</td></tr><tr><td>Order of Magnitude</td><td><a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E9%87%8F%E7%BA%A7" target="_blank" rel="noopener">数量级思维</a></td></tr></tbody></table><table><thead><tr><th>System</th><th>系统理论</th></tr></thead><tbody><tr><td>Scale</td><td>规模</td></tr><tr><td>Law of Diminishing Returns</td><td><a href="https://zh.wikipedia.org/wiki/%E5%A0%B1%E9%85%AC%E9%81%9E%E6%B8%9B" target="_blank" rel="noopener">报酬递减法则</a></td></tr><tr><td>Pareto Principle</td><td><a href="https://zh.wikipedia.org/wiki/%E5%B8%95%E7%B4%AF%E6%89%98%E6%B3%95%E5%88%99" target="_blank" rel="noopener">帕累托法则</a></td></tr><tr><td><a href="https://www.farnamstreetblog.com/2011/10/mental-model-feedback-loops/" target="_blank" rel="noopener">Feedback Loops</a> (and Homeostasis)</td><td><a href="http://wiki.mbalib.com/wiki/%E5%8F%8D%E9%A6%88%E7%8E%AF" target="_blank" rel="noopener">反馈环</a>以及内稳态</td></tr><tr><td>Chaos Dynamics (Sensitivity to Initial Conditions)</td><td>混沌动力学（对初始条件的敏感性）</td></tr><tr><td>Preferential Attachment (Cumulative Advantage)</td><td>偏好依附（优势积累效应）</td></tr><tr><td>Emergence</td><td>涌现理论</td></tr><tr><td>Irreducibility</td><td>不可化归性/不可约性</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2011/08/the-tragedy-of-the-commons/" target="_blank" rel="noopener">Tragedy of the Commons</a></td><td><a href="https://zh.wikipedia.org/wiki/%E5%85%AC%E5%9C%B0%E6%82%B2%E5%8A%87" target="_blank" rel="noopener">公地悲剧</a></td></tr><tr><td><a href="https://www.farnamstreetblog.com/2009/12/mental-model-greshams-law/" target="_blank" rel="noopener">Gresham’s Law</a></td><td>格雷欣法则</td></tr><tr><td>Algorithms</td><td>算法</td></tr><tr><td>Fragility - Robustness - Antifragility</td><td>脆弱-鲁棒性-反脆弱</td></tr><tr><td>Backup Systems / <a href="https://www.farnamstreetblog.com/2011/07/mental-model-redundancy/" target="_blank" rel="noopener">Redundancy</a></td><td>备份系统/冗余</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2013/12/margin-of-safety/" target="_blank" rel="noopener">Margin of Safety</a></td><td>安全边际</td></tr><tr><td>Criticality</td><td><a href="http://wiki.mbalib.com/wiki/%E4%B8%B4%E7%95%8C%E7%8A%B6%E6%80%81%E7%90%86%E8%AE%BA" target="_blank" rel="noopener">临界态</a></td></tr><tr><td>Network Effects</td><td><a href="http://wiki.mbalib.com/wiki/%E7%BD%91%E7%BB%9C%E6%95%88%E5%BA%94" target="_blank" rel="noopener">网络效应</a></td></tr><tr><td><a href="https://www.farnamstreetblog.com/2011/10/what-is-a-black-swan/" target="_blank" rel="noopener">Black Swan</a></td><td><a href="https://zh.wikipedia.org/wiki/%E9%BB%91%E5%A4%A9%E9%B5%9D%E6%95%88%E6%87%89" target="_blank" rel="noopener">黑天鹅</a></td></tr><tr><td>Via Negativa - Omission/Removal/<a href="https://en.wikipedia.org/wiki/Harm_avoidance" target="_blank" rel="noopener">Avoidance of Harm</a></td><td><a href="https://zh.wikipedia.org/wiki/%E5%90%A6%E5%AE%9A%E7%A5%9E%E5%AD%B8" target="_blank" rel="noopener">否定神学</a>-去除危害</td></tr><tr><td><a href="https://en.wikipedia.org/wiki/Lindy_effect" target="_blank" rel="noopener">The Lindy Effect</a></td><td>林迪效应</td></tr><tr><td>Renormalization Group</td><td><a href="https://zh.wikipedia.org/wiki/%E9%87%8D%E6%95%B4%E5%8C%96%E7%BE%A4" target="_blank" rel="noopener">重整化群</a></td></tr><tr><td>Spring-loading</td><td>螺旋加载</td></tr><tr><td>Complex Adaptive Systems</td><td>复杂适应系统</td></tr></tbody></table><table><thead><tr><th>Physical World</th><th>物理学</th></tr></thead><tbody><tr><td>Law of Thermodynamics</td><td>热力学原理</td></tr><tr><td>Reciprocity</td><td>相互作用力</td></tr><tr><td>Velocity</td><td>速度（速率和方向）</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2017/05/galilean-relativity-invasion-scotland/" target="_blank" rel="noopener">Relativity</a></td><td>相对性原理/相对论</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2017/06/activation-energy/" target="_blank" rel="noopener">Activation Energy</a></td><td>活化能</td></tr><tr><td>Catalysts</td><td>催化剂</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2017/06/leverage/" target="_blank" rel="noopener">Leverage</a></td><td>杠杆作用</td></tr><tr><td>Inertia</td><td>惯性</td></tr><tr><td>Alloying</td><td>合金化</td></tr></tbody></table><table><thead><tr><th>The Biological World</th><th>生物学</th></tr></thead><tbody><tr><td>Incentives</td><td>诱因/动机/激励</td></tr><tr><td>Cooperation (Including Symbiosis)</td><td>合作（包括共生）</td></tr><tr><td>Tendency to Minimize Energy Output(Mental &amp; Physical)</td><td>耗能最小化趋势</td></tr><tr><td>Adaptation</td><td>适应</td></tr><tr><td>Evolution by Natural Selection</td><td>自然选择进化</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2012/10/the-red-queen-effect/" target="_blank" rel="noopener">The Red Queen Effect</a> (Co-evolutionary Arms Race)</td><td>红皇后效应（进化军备竞赛）</td></tr><tr><td>Replication</td><td>繁殖</td></tr><tr><td>Hierarchical and Other Organizing Instincts</td><td>等级制度和其他组织本能</td></tr><tr><td>Self-Preservation Instincts</td><td>自我保护本能</td></tr><tr><td>Simple Physiological Reward-Seeking</td><td>简单生物求赏本能</td></tr><tr><td>Exaptation</td><td>延伸适应</td></tr><tr><td>Extinction</td><td>灭绝</td></tr><tr><td>Ecosystems</td><td>生态系统</td></tr><tr><td>Niches</td><td>生态位（利基）</td></tr><tr><td>Dunbar’s Number</td><td>顿巴数</td></tr></tbody></table><table><thead><tr><th>Human Nature &amp; Judgment</th><th>人性与判断</th></tr></thead><tbody><tr><td>Trust</td><td>新人</td></tr><tr><td>Bias from <a href="https://en.wikipedia.org/wiki/Incentive" target="_blank" rel="noopener">Incentives</a></td><td>激励偏差</td></tr><tr><td>Pavlovian Mere Association</td><td>巴甫洛夫经典条件反射</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2016/08/mental-model-bias-envy-jealousy/" target="_blank" rel="noopener">Tendency to Feel Envy &amp; Jealousy</a></td><td>天然羡慕嫉妒心</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2016/09/mental-model-bias-from-liking-loving/" target="_blank" rel="noopener">Tendency to Distort Due to Liking/Loving</a> or <a href="Disliking/Hating">Disliking/Hating</a></td><td>好恶造成评价偏差</td></tr><tr><td>Denial</td><td>否认</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2011/08/mental-model-availability-bias/" target="_blank" rel="noopener">Availability Heuristic</a></td><td><a href="http://wiki.mbalib.com/wiki/%E5%8F%AF%E5%88%A9%E7%94%A8%E6%80%A7%E6%B3%95%E5%88%99" target="_blank" rel="noopener">可得性启发(可得性偏差)</a></td></tr><tr><td>Representativeness Heuristic</td><td><a href="http://wiki.mbalib.com/wiki/%E4%BB%A3%E8%A1%A8%E6%80%A7%E5%81%8F%E5%B7%AE" target="_blank" rel="noopener">代表性启发(代表性偏差)</a></td></tr><tr><td>a. <a href="https://www.farnamstreetblog.com/2012/11/mental-model-bias-from-insensitivity-to-base-rates/" target="_blank" rel="noopener">Failure to Account for Base Rates</a></td><td><a href="https://zh.wikipedia.org/wiki/%E5%9F%BA%E6%9C%AC%E6%AF%94%E7%8E%87%E8%AC%AC%E8%AA%A4" target="_blank" rel="noopener">基本比率谬误</a></td></tr><tr><td>b. Tendency to Stereotype</td><td>刻板印象</td></tr><tr><td>c. Failure to See False Conjunctions</td><td><a href="https://zh.wikipedia.org/wiki/%E4%B8%8D%E7%9B%B8%E5%B9%B2%E7%9A%84%E8%AC%AC%E8%AA%A4" target="_blank" rel="noopener">关联谬误</a></td></tr><tr><td><a href="https://www.farnamstreetblog.com/2009/09/mental-model-social-proof/" target="_blank" rel="noopener">Social Proof</a> (Safety in Numbers)</td><td>社交证言认同(数字安全感)</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2016/04/narrative-fallacy/" target="_blank" rel="noopener">Narrative Instinct</a></td><td>叙事本能</td></tr><tr><td>Curiosity Instinct</td><td>好奇心</td></tr><tr><td>Language Instinct</td><td>语言本能</td></tr><tr><td>First-Conclusion Bias</td><td>第一结论偏差/先入为主</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2013/05/mental-model-bias-from-insensitivity-to-sample-size/" target="_blank" rel="noopener">Tendency to Overgeneralize from Small Samples</a></td><td>以偏概全</td></tr><tr><td>Relative Satisfaction/Misery Tendencies</td><td>相对的满足、相对的痛苦</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2016/08/commitment-consistency-bias/" target="_blank" rel="noopener">Commitment &amp; Consistency Bias</a></td><td>承诺偏差和一致性偏差</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2009/08/what-is-hindsight-bias/" target="_blank" rel="noopener">Hindsight Bias</a></td><td>事后诸葛亮</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2011/09/mental-model-kantian-fairness-tendency/" target="_blank" rel="noopener">Sensitivity to Fairness</a></td><td>公平敏感性</td></tr><tr><td>Tendency to Overestimate Consistency of Behavior (<a href="https://www.farnamstreetblog.com/2016/08/fundamental-attribution-error/" target="_blank" rel="noopener">Fundamental Attribution Error</a>)</td><td>过分估计行为一致性(基本归因错误，高估内因低估外因)</td></tr><tr><td>Influence of Authority</td><td>权威影响</td></tr><tr><td>Influence of Stress (Including <a href="https://en.wikipedia.org/wiki/Breaking_point_(psychology)" target="_blank" rel="noopener">Breaking Points</a>)</td><td>压力影响</td></tr><tr><td>Survivorship Bias</td><td>幸存者偏差</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2015/06/do-something-syndrome/" target="_blank" rel="noopener">Tendency to Want to Do Something</a> (Fight/Flight, Intervention, Demonstration of Value, etc.)</td><td>盲目行动</td></tr></tbody></table><table><thead><tr><th>Microeconomics &amp; Strategy</th><th>微观经济学和策略</th></tr></thead><tbody><tr><td>Opportunity Costs</td><td><a href="https://zh.wikipedia.org/wiki/%E6%9C%BA%E4%BC%9A%E6%88%90%E6%9C%AC" target="_blank" rel="noopener">机会成本</a></td></tr><tr><td><a href="https://en.wikipedia.org/wiki/Creative_destruction" target="_blank" rel="noopener">Creative Destruction</a></td><td><a href="https://zh.wikipedia.org/wiki/%E5%88%9B%E9%80%A0%E6%80%A7%E7%A0%B4%E5%9D%8F" target="_blank" rel="noopener">创造性破坏</a></td></tr><tr><td><a href="https://www.farnamstreetblog.com/2009/08/should-tiger-woods-mow-his-own-lawn-the-principles-of-comparative-advantage/" target="_blank" rel="noopener">Comparative Advantage</a></td><td><a href="http://wiki.mbalib.com/wiki/%E6%9D%8E%E5%98%89%E5%9B%BE%E7%9A%84%E6%AF%94%E8%BE%83%E4%BC%98%E5%8A%BF%E7%90%86%E8%AE%BA" target="_blank" rel="noopener">比较优势</a></td></tr><tr><td>Specialization (Pin Factory)</td><td>专业分工</td></tr><tr><td>Seizing the Middle</td><td>控制中场</td></tr><tr><td>Trademarks, Patents, and Copyrights</td><td>商标，专利，版权</td></tr><tr><td>Double-Entry Bookkeeping</td><td><a href="https://zh.wikipedia.org/wiki/%E5%A4%8D%E5%BC%8F%E7%B0%BF%E8%AE%B0" target="_blank" rel="noopener">复式记账法</a></td></tr><tr><td>Utility (Marginal, Diminishing, Increasing)</td><td><a href="https://zh.wikipedia.org/wiki/%E6%95%88%E7%94%A8" target="_blank" rel="noopener">效用</a>(边际效用，边际效用递减，边际效用递增)</td></tr><tr><td>Bottlenecks</td><td>瓶颈</td></tr><tr><td>Prisoner’s Dilemma</td><td><a href="https://zh.wikipedia.org/wiki/%E5%9B%9A%E5%BE%92%E5%9B%B0%E5%A2%83" target="_blank" rel="noopener">囚徒困境</a></td></tr><tr><td>Bribery</td><td>贿赂(寻租)</td></tr><tr><td>Arbitrage</td><td><a href="https://zh.wikipedia.org/wiki/%E5%A5%97%E5%88%A9" target="_blank" rel="noopener">套利</a></td></tr><tr><td><a href="https://www.farnamstreetblog.com/2009/07/mental-model-supply-and-demand/" target="_blank" rel="noopener">Supply and Demand</a></td><td>供给和需求</td></tr><tr><td>Scarcity</td><td><a href="https://zh.wikipedia.org/wiki/%E7%A8%80%E7%BC%BA%E6%80%A7" target="_blank" rel="noopener">稀缺性</a></td></tr></tbody></table><table><thead><tr><th>Military &amp; War</th><th>军事战争</th></tr></thead><tbody><tr><td>Seeing the Front</td><td>看到前线/身临前线</td></tr><tr><td><a href="https://en.wikipedia.org/wiki/Asymmetric_warfare" target="_blank" rel="noopener">Asymmetric Warfare</a></td><td>非对称作战</td></tr><tr><td><a href="https://en.wikipedia.org/wiki/Two-front_war" target="_blank" rel="noopener">Two-Front War</a></td><td>两线作战</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2017/06/counterinsurgency/" target="_blank" rel="noopener">Counterinsurgency</a></td><td>镇压叛乱</td></tr><tr><td><a href="https://www.farnamstreetblog.com/2017/06/mutually-assured-destruction/" target="_blank" rel="noopener">Mutually Assured Destruction</a></td><td>共同毁灭原则（确保同归于尽）</td></tr></tbody></table><h3 id="参考阅读"><a class="markdownIt-Anchor" href="#参考阅读"></a> 参考阅读</h3><blockquote><ol><li><a href="https://www.farnamstreetblog.com/mental-models/" target="_blank" rel="noopener">Mental Models: The Best Way to Make Intelligent Decisions (113 Models Explained)</a></li><li><a href="https://book.douban.com/subject/10485011/" target="_blank" rel="noopener">《穷查理宝典-查理.芒格的智慧箴言录》</a></li><li><a href="https://zh.wikipedia.org/wiki/%E8%AA%8D%E7%9F%A5%E5%81%8F%E8%AA%A4%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">维基百科：认知偏差列表 Cognitive Bias</a></li><li><a href="http://www.fallacyfiles.org/" target="_blank" rel="noopener">The Fallacy Files</a></li></ol></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;著名的学习博客Farnam Street基于查理·芒格的心智模型栅格方法，&lt;a href=&quot;https://www.farnamstreetblog.com/mental-models/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;整理了一系列思考和行动的框架&lt;/a&gt;，用来指导人们更好地认识世界，做出更好的决策。我整理成了快速参考表格，部分可点击连接跳转原始博文或百科释义。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="readingnotes" scheme="https://duran.im/tags/readingnotes/"/>
+    
+      <category term="mentalmodels" scheme="https://duran.im/tags/mentalmodels/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过AppleScript快速创建和发布Hexo文章</title>
+    <link href="https://duran.im/2017/12/21/deploy-hexo-with-applescript/"/>
+    <id>https://duran.im/2017/12/21/deploy-hexo-with-applescript/</id>
+    <published>2017-12-21T06:51:01.000Z</published>
+    <updated>2018-08-06T06:45:24.106Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为给2018年定了一个要做<strong>输出型人</strong>的小目标，最近又开始对搁置了2年的博客不折腾不舒服斯基了。</p><a id="more"></a><p>先是由于换了电脑，重装nodejs和npm，Hexo从2.0升级到了3.0，按照<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="noopener">官方指引</a>完成了升级迁移。经过2年的变化，本人早就换了Bear作为主力笔记软件，还付费订阅了一年的服务。昨天折腾的时候发现Bear导出的Markdown文档meta信息乱掉了，分隔符会从<code>---</code> 变成 <code>- - - -</code>  从而导致发布显示错误。无奈之下只能放弃Bear作为Hexo文章编辑器，转向轻量级的专业Markdown编辑器Typora。</p><p>万事大吉，可以开始写东西啦。</p><h3 id="回忆一下hexo的使用命令"><a class="markdownIt-Anchor" href="#回忆一下hexo的使用命令"></a> 回忆一下Hexo的使用命令</h3><ol><li>打开终端，切换到Hexo的目录（有的人还会有切换env的步骤）</li></ol><p><code>$ cd ~/Hexoblog</code></p><ol start="2"><li>输入命令行，创建新文章</li></ol><p><code>$ hexo new hello1984</code></p><ol start="3"><li><p><a href="http://xn--Typorahello1984-n892al72bgt6f.md" target="_blank" rel="noopener">用Typora打开hello1984.md</a>，编辑保存</p></li><li><p>输入命令行，发布文章（有时候还需要清理缓存）</p></li></ol><p><code>$ hexo clean</code></p><p><code>$ hexo d -g</code></p><p>开启和执行终端命令实在有点繁琐啊喂，于是在想能不能也跟<a href="http://duran.im/2014/12/14/VPN-automator/">以前一样通过Automator偷点懒</a>呢？于是做了点功课，参考这两个po主的代码（其实基本就拿来了）进行实现。其实尝试过程还是比较痛苦的，本意是想用iTerm而不是自带终端，谁知网上大多数iTerm的AppleScript脚本案例都在3.0版iTerm下报错了，建议还是用Mac系统自带的终端。</p><p>具体方法就是打开Automator，选择<code>运行AppleScript</code>，粘贴下面的代码就OK了。</p><h3 id="hexo快速创建脚本"><a class="markdownIt-Anchor" href="#hexo快速创建脚本"></a> Hexo快速创建脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Finder&quot;</span><br><span class="line">activate</span><br><span class="line">display dialog &quot;先想个好标题&quot; default answer &quot;&quot;</span><br><span class="line">set title to text returned of result as text</span><br><span class="line">end tell</span><br><span class="line">tell application &quot;Terminal&quot;</span><br><span class="line">activate</span><br><span class="line">if (count of windows) is 0 then</span><br><span class="line">tell application &quot;System Events&quot;</span><br><span class="line">keystroke &quot;n&quot; using &#123;command down&#125;</span><br><span class="line">end tell</span><br><span class="line">else</span><br><span class="line">activate</span><br><span class="line">end if</span><br><span class="line">set win to window [0]</span><br><span class="line">set currentTab to selected tab of win</span><br><span class="line">-- 在当前 Tab 中执行改变目录的操作（需修改到自己的 Hexo 所在路径）</span><br><span class="line">do script &quot;cd ~/Hexoblog&quot; in currentTab</span><br><span class="line">do script &quot;hexo new &quot; &amp; title in currentTab</span><br><span class="line">delay 1</span><br><span class="line">do script &quot;open -a Typora source/_posts/&quot; &amp; title &amp; &quot;.md&quot; in currentTab</span><br><span class="line">delay 3</span><br><span class="line">close windows</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure><h3 id="hexo一键发布脚本"><a class="markdownIt-Anchor" href="#hexo一键发布脚本"></a> Hexo一键发布脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Terminal&quot;</span><br><span class="line">do script &quot;&quot;</span><br><span class="line">activate</span><br><span class="line">set win to window [0]</span><br><span class="line">set currentTab to selected tab of win</span><br><span class="line">-- 在当前 Tab 中执行改变目录的操作（需修改到自己的 Hexo 所在路径）</span><br><span class="line">do script &quot;cd ~/Hexoblog&quot; in currentTab</span><br><span class="line">do script &quot;hexo clean &quot; in currentTab</span><br><span class="line">delay 5</span><br><span class="line">do script &quot;hexo d -g &quot; in currentTab</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure><p>最后用Automator导出为应用程序，顺便DIY俩图标，放在Dock上，愉快地开始码字了。</p><h3 id="参考代码"><a class="markdownIt-Anchor" href="#参考代码"></a> 参考代码</h3><blockquote><ul><li><a href="">使用 AppleScript 制作自动脚本发布 Hexo</a></li><li><a href="http://hunnble.github.io/2016/12/08/AppleScript%E5%AE%9E%E7%8E%B0hexo%E6%96%B0%E5%BB%BA-%E5%8F%91%E5%B8%83%E5%B7%A5%E4%BD%9C%E6%B5%81/" target="_blank" rel="noopener">AppleScript实现hexo新建/发布工作流</a></li></ul></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为给2018年定了一个要做&lt;strong&gt;输出型人&lt;/strong&gt;的小目标，最近又开始对搁置了2年的博客不折腾不舒服斯基了。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://duran.im/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>乘车记20171201</title>
+    <link href="https://duran.im/2017/12/02/riding-talk/"/>
+    <id>https://duran.im/2017/12/02/riding-talk/</id>
+    <published>2017-12-01T16:13:04.000Z</published>
+    <updated>2018-08-06T06:45:24.112Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天下班打快车，遇上一位北京大叔，开着自己的斯柯达昊锐出来赚点菜钱，一路上就没停止过贫嘴。</p><a id="more"></a><p>大叔跟上一个下车的女孩儿聊了一路到底要不要在大城市拼搏的高深话题。女孩儿吐槽北京生活成本越来越高，但又不得不努力奋斗，因为周围人都在努力，一个不小心就会被时代抛弃。大叔就一个劲儿劝女孩儿轻轻松松生活，干得不开心就歇着，别只顾着忙碌焦虑，皮肤可就不好了。俩人聊着聊着还聊了高晓松朴树崔健，大叔说朴树弟弟经常跟自己一起吃饭。俩人共同赞美完子曰，女孩儿就下车了我抬头一看，mix。</p><p>我心想完蛋，下个轮到跟我唠了，我一个社恐但无法拒绝别人的人，只好开始听大叔讲故事。</p><p>大叔66年的，父母是中科院的，家住中关村大院，但自己从小不爱读书，没上大学，90年代开始在中关村倒卖盗版光盘起家，后来做集成电路批发，一年不用花什么心思经营，只要跟紫光拿个合同就能赚得盆满。大叔和同样没上过大学的哥们，就这样在不到30岁的时候变成了有钱人，意气风发的不行，整天出来浪，“上街都横着走”。</p><p>后来因为钱太好赚，大叔和合伙人就做了甩手掌柜，买了两套房，在家歇了2年，2年后再出来就没有做生意的心力气儿了。大叔无不遗憾地表示，要是早知道房价涨这么多就多买些房子囤着了，还做什么生意啊。最近发小又折腾着要开餐馆，大叔连连摆手不参与了，做餐饮太累，去年11月装修好的店，今年到现在还没能开业，自然是因为各种手续还没能办完。</p><p>他也感叹只是自己这代人运气好，真正一直赚大钱的还是那些上了大学出国留学了的那拨人。当年他做二道贩子，只是赚差价，但法律风险却很高。那时候卖盗版要是被抓了最高能判20年，而现在最多罚款。他认识的清华大院的高干子弟们，从海外留学回来，早早学会了各种不花自己钱做事儿的高级玩法，以钱生钱。当年银行刚刚市场化，主动打电话来提供无息、无抵押贷款，大叔竟然不敢要。而高知同学们却“胆子够大”，在上地开发区几乎免费拿地拿房还拿贷款，办公司拉投资，骗贷的皮包公司开了一家又一家，早早就买了大别墅。</p><p>聊到最近的赶人政策，大叔说不用赶，自己就想走，下个月就准备去山东或者福建待两年，到哪儿不是活儿着。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天下班打快车，遇上一位北京大叔，开着自己的斯柯达昊锐出来赚点菜钱，一路上就没停止过贫嘴。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="story" scheme="https://duran.im/tags/story/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从《聚焦》看企业内部创新的成功要素</title>
+    <link href="https://duran.im/2017/12/01/spotlight/"/>
+    <id>https://duran.im/2017/12/01/spotlight/</id>
+    <published>2017-12-01T04:01:46.000Z</published>
+    <updated>2018-08-06T06:45:24.113Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨晚重温了一遍《聚焦》，从企业管理的角度看，BG和Spotlight的故事也不失为一本企业内部创新的教科书。</p><p><strong>《聚焦》里的几种角色（非施暴者一方）对应到企业里的组织架构</strong></p><ul><li><p>Marty——CEO</p></li><li><p>Ben、Pete——部门老VP们</p></li><li><p>Robby——业务组长</p></li><li><p>三人调查小组——执行员工</p></li><li><p>受害人们、律师、神父性侵研究专家——用户和代表用户的声音，这里面有信息也有噪音</p></li></ul><p><strong>新管理者如何快速胜任</strong></p><ol><li>Marty来了之后，单独约业务组长吃饭了解情况，认真地询问业务核心数据。相信这个单身的犹太人整天不回家，也跟其他主编逐一聊过。</li></ol><blockquote><p>新上任的管理者要脚踏实地地掌握公司目前的状况，尤其要是跟各个业务负责人去面对面交谈，建立接触和信任，也能迅速了解到团队里真正的精英在哪里。</p></blockquote><ol start="2"><li>第一次开主编会，各个版面轮番汇报进度，Marty并不一一点评，而是一针见血地指出神父性侵案缺乏深入调查。</li></ol><blockquote><p>新上任的管理者应该火速介入核心业务当中，而不是“接着之前的烂摊子”，做routine的管理。</p></blockquote><ol start="3"><li>会后Marty迅速二次召集了Ben和Robby，强调神父案件的重要性和必要性，表扬Spotlight小组过去的努力，但说你们做得还不够，这件事必须要做更好的coverage。</li></ol><blockquote><p>新CEO要有能力迅速从现有的组织中找出来能够立刻承担战略业务的团队，而不是花时间资源招聘建团队，更不是带着自己的嫡系过来。Robby是土生土长的波士顿人，Spotlight小组也能胜任这个战略业务。他们只是需要方向，更需要被授权。同时，新CEO要及时将战略目标清晰传递给VP和业务负责人，并且是扁平地传递到真正干事儿的组长那儿，而不是让VP去层层传递。</p></blockquote><ol start="4"><li>当Ben质疑Marty的指派会影响Spotlight独立性，Marty只是retweet了一个问句，还是把这个任务assign给了Robby。</li></ol><blockquote><p>当战略遭遇下属挑战的时候，管理者适时的独裁是有必要的。</p></blockquote><ol start="5"><li>调查任务分配下去之后，Marty提前去跟出版人Pete打招呼，与主教会面，在其虚伪的威严之下不卑不亢不妥协。</li></ol><blockquote><p>CEO主动告诉既得利益者（例如大企业里的销售部门），我们要做得事儿肯定会影响到你们现在的收入，但是我们就是要做，但怎么做我不会告诉你的。CEO面对既得利益者背后的强权（例如董事会里的守旧股东或者有关系的大客户），明确企业管理的界限，既然我要顶着CEO的title，那我就必须拥有CEO的独立管理权，你们没权力干预，也别想介入分一杯羹。CEO要有勇气保证创新业务远离现有的盈利模式，甚至不要考虑盈利，也不要惧怕影响现有的盈利。</p></blockquote><p>to be continued</p>]]></content>
+    
+    <summary type="html">
+    
+      从企业管理的角度看，Boston Global和Spotlight的故事也不失为一本企业内部创新的教科书。
+    
+    </summary>
+    
+    
+      <category term="management" scheme="https://duran.im/tags/management/"/>
+    
+      <category term="innovation" scheme="https://duran.im/tags/innovation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sketch练习 - 银翼杀手2049</title>
+    <link href="https://duran.im/2017/11/17/blade-runner-2049-sketch/"/>
+    <id>https://duran.im/2017/11/17/blade-runner-2049-sketch/</id>
+    <published>2017-11-17T15:17:32.000Z</published>
+    <updated>2018-08-06T06:45:24.105Z</updated>
+    
+    <content type="html"><![CDATA[<p>很久没画了，树的阴影是乱来的。</p><a id="more"></a><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/bladerunner2049_sceneorange.png" alt="image"><br><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/bladerunner2049_scenegray.png" alt="image"></p><p>来自<a href="https://movie.douban.com/photos/photo/2493312974/" target="_blank" rel="noopener">电影截图</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;很久没画了，树的阴影是乱来的。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="sketch" scheme="https://duran.im/tags/sketch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>迎向灵光消逝的年代</title>
+    <link href="https://duran.im/2017/07/13/to-liuxiaobo/"/>
+    <id>https://duran.im/2017/07/13/to-liuxiaobo/</id>
+    <published>2017-07-13T15:52:59.000Z</published>
+    <updated>2018-08-06T06:45:24.113Z</updated>
+    
+    <content type="html"><![CDATA[<p>在门户黄金时代做新闻值班编辑大概是件自认为“能力有多大责任就有多大”的工作，那时候确实是少数价值可以影响上亿人的价值，有段时间上大夜班，迎着晨光下班感觉自己深藏功与名。</p><a id="more"></a><p>渐渐发现，技术迭代和censorship加剧这两件事总是会不约而同一前一后相伴到来。门户，博客，微博，新闻客户端，微信公众号，今日头条…</p><p>后来的一切就像本雅明在《机械复制时代的艺术作品》里说的那样，人工复制逐渐被机器复制取代，传统新闻的神圣性被消解，内容价值重塑成几乎只剩下满足受众作为主体的展示价值。现在的人们管这叫“内容分发”、“个性化推荐”。</p><p>然而本雅明自己也说过，机器复制只消解了神圣性，却永远不可能消解政治表达。就如现在，刻意没有政治表达的“内容机器”就是这个国家终极意识形态的政治表达。</p><p>学为人师，行为世范<br>灵光虽已消逝，但愿不作恶</p><p>2017.7.13，R.I.P</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在门户黄金时代做新闻值班编辑大概是件自认为“能力有多大责任就有多大”的工作，那时候确实是少数价值可以影响上亿人的价值，有段时间上大夜班，迎着晨光下班感觉自己深藏功与名。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="liuxiaobo" scheme="https://duran.im/tags/liuxiaobo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>老板，给我冒二两牛肉粉！</title>
+    <link href="https://duran.im/2015/12/19/sichuanese-rice-noodle-recipe/"/>
+    <id>https://duran.im/2015/12/19/sichuanese-rice-noodle-recipe/</id>
+    <published>2015-12-19T12:11:23.000Z</published>
+    <updated>2018-08-06T06:45:24.112Z</updated>
+    
+    <content type="html"><![CDATA[<p>川北地区吃的细粉，粗细比绵阳米粉粗，比桂林米粉细很多，米粉含量高。南充顺庆米粉有各种哨子搭配，羊肉粉、牛肉粉、肥肠粉、鳝鱼粉、三鲜粉等，常会加入四川酸菜、豌豆等额外的哨子，不同于其他地区的米粉，顺庆人还喜欢加入一种油饼“油干儿”泡入米粉。</p><p>当地人管做米粉叫“冒粉”，管吃米粉叫“喝粉”，到南充的粉馆，一般这么点单：“老板，给我冒二两鳝鱼，不要葱，加酸菜加豌豆，再夹个油干儿”。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/ricenoodle.jpg" alt=""></p><p>米粉的做法其实很简单，可分为煮汤底、做哨子、备米粉、冒米粉四步。</p><h3 id="煮汤底"><a class="markdownIt-Anchor" href="#煮汤底"></a> 煮汤底</h3><p>猪棒骨冷水泡出血水后装大锅里盛足冷水，姜拍扁，几颗花椒，少许料酒，放进去，熬2个小时。</p><h3 id="做哨子"><a class="markdownIt-Anchor" href="#做哨子"></a> 做哨子</h3><p>牛腩切大块洗净后，放沸水煮出血水，沥干。大葱切片、姜切大块花刀切成表面格子，整粒蒜几颗，油热后放入葱姜蒜爆香。再放入牛腩快速翻炒断生，然后倒入几勺豆瓣酱煸出红油。将其他香料一同放入锅中，倒入纯净水盖过肉的表面，煮开。将整锅牛肉倒入高压锅，炖肉模式或者炖20分钟，肉松软入味。</p><h3 id="备米粉"><a class="markdownIt-Anchor" href="#备米粉"></a> 备米粉</h3><p>煮肉的同时，取出适量干米粉，用开水泡30分钟后过冷水，用冷水浸泡待用。</p><h3 id="冒米粉"><a class="markdownIt-Anchor" href="#冒米粉"></a> 冒米粉</h3><p>骨头汤锅开大火，用米粉漏勺抓取米粉，放入滚汤中烫熟，喜欢米粉有劲道的就少冒点时间，喜欢吃软一些的就多冒点时间，但别太久。</p><p>将烫好的米粉放入碗中，加上猪骨汤底，牛腩哨子（肉和肉汁、红油均要），撒上香菜。由于豆瓣酱自带盐，而猪骨汤和米粉无盐，各人可根据自己喜好加盐、胡椒、味精等调料。</p>]]></content>
+    
+    <summary type="html">
+    
+      当地人管做米粉叫“冒粉”，管吃米粉叫“喝粉”，到南充的粉馆，一般这么点单：“老板，给我冒二两鳝鱼，不要葱，加酸菜加豌豆，再夹个油干儿”。
+    
+    </summary>
+    
+    
+      <category term="recipe" scheme="https://duran.im/tags/recipe/"/>
+    
+      <category term="food" scheme="https://duran.im/tags/food/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>世界上最好的青椒肉丝</title>
+    <link href="https://duran.im/2015/08/27/shredded-pork-with-gren-pepper/"/>
+    <id>https://duran.im/2015/08/27/shredded-pork-with-gren-pepper/</id>
+    <published>2015-08-26T17:01:53.000Z</published>
+    <updated>2018-08-06T06:45:24.112Z</updated>
+    
+    <content type="html"><![CDATA[<p>初中的时候，我妈不在身边，于是我奶奶从乡下来照顾我和我爸的饮食。</p><p>我奶奶从饥荒年代熬过来一共养育成人4个子女，并不太会做多少出彩的菜式，于是她经常一段时间连续买相同的食材做固定几个菜。当青椒肉丝这道菜一星期第三次出现在餐桌上时，我和我爸都受不了了，不客气地抱怨菜品不丰富。有一天趁奶奶外出，我偷偷扔掉了冰箱里剩下的猪肉和青椒。</p><p>事到如今我才明白，要始终如一地炒出一盘极致鲜嫩的青椒肉丝，是一件极难的事。</p><p>首先，一定要是新鲜猪肉通脊或者后腿肉，里脊是不行的。我奶奶经常是到菜市场买后腿肉，凭借经验买到最新鲜最嫩的部分。</p><p>其次，肉丝和青椒一定要切得细长均匀。我奶奶手持重重的铁菜刀，能切出非常均匀的肉丝。</p><p>然后，肉丝加入调味和蛋清再少量挂粉，这一步粉一定不能多，也不能在碗底流出汁水。这一步我无法猜测我奶奶的做法，但八九不离十，否则肉丝无法保持水分。</p><p>炒制的时候，我奶奶最爱用菜籽油，后期换成比较健康的色拉油，但是前者更香。油大火烧到4、5成熟，迅速滑炒肉丝断生。这一步我也很难臆测到奶奶的做法，她做的青椒肉丝永远不会很油腻，油量恰到好处。到底是度量衡神准，还是中途有沥油，不得而知。</p><p>肉断生后要迅速拨到一边，在锅内加入调味汁炒匀，少许勾芡，最后倒入青椒丝滑炒，出锅。很多餐馆、家庭做青椒肉丝的时候，无论挂粉还是炒制这步，都会用生抽甚至老抽。然而我奶奶的青椒肉丝从不放酱油，炒出的肉丝完全是暖白的原色，而青椒也青翠欲滴，吃完盘底只有一点点清油。</p><p>上大学之前的我除了极度挑食，还极度“挑食”——吃饭永远仔仔细细盯着菜，容不得半点杂物。所以每当被我发现菜里有一根黑头发（奶奶那时有染发），我都会尖叫着扔掉筷子，把碗推到一边或者冲到厕所倒马桶里。一旁的奶奶，表情满是自责，又轻轻为自己辩护：“不就是头发嘛……”</p><p>而她老人家如今一头白发，在姑妈家颐养天年，不再下厨。漂泊异乡多年的我终于不再挑食，却再难吃到她炒的那盘青椒肉丝。想到于此，泪已沾湿面目。</p>]]></content>
+    
+    <summary type="html">
+    
+      要始终如一地炒出一盘极致鲜嫩的青椒肉丝，是一件极难的事。
+    
+    </summary>
+    
+    
+      <category term="recipe" scheme="https://duran.im/tags/recipe/"/>
+    
+      <category term="food" scheme="https://duran.im/tags/food/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sketch练习 - San Francisco</title>
+    <link href="https://duran.im/2015/08/16/sketch-sf/"/>
+    <id>https://duran.im/2015/08/16/sketch-sf/</id>
+    <published>2015-08-16T14:29:04.000Z</published>
+    <updated>2018-08-06T06:45:24.112Z</updated>
+    
+    <content type="html"><![CDATA[<p>测试Sketch矢量绘图功能，偷师Dribbble上很喜欢的<a href="https://dribbble.com/shots/2032002-Animated-illustrations-NY-and-SF" target="_blank" rel="noopener">一幅作品</a>，采取偷懒画法（省略阴影细节）以及各种歪门邪道（狂用subtract和mask），用时大概1个半小时。</p><a id="more"></a><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/SF.png" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;测试Sketch矢量绘图功能，偷师Dribbble上很喜欢的&lt;a href=&quot;https://dribbble.com/shots/2032002-Animated-illustrations-NY-and-SF&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;一幅作品&lt;/a&gt;，采取偷懒画法（省略阴影细节）以及各种歪门邪道（狂用subtract和mask），用时大概1个半小时。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="sketch" scheme="https://duran.im/tags/sketch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sketch练习 - Wallet</title>
+    <link href="https://duran.im/2015/08/16/wallet-sketch/"/>
+    <id>https://duran.im/2015/08/16/wallet-sketch/</id>
+    <published>2015-08-16T10:10:20.000Z</published>
+    <updated>2018-08-06T06:45:24.114Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个钱包界面练习，偷师自<a href="https://dribbble.com/shots/2153963-Dompet-Wallet-App" target="_blank" rel="noopener">Dompet - Wallet App</a></p><a id="more"></a><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/wallet.jpg" alt="image"></p><p>后来才发现人家有源文件，于是乎研究了一下，原作者画donut chart方式比我的高级多了，利用三角形可以精确控制比例分布。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/pie-chart-method.png" alt="image"></p><p>我自己则是偷懒方法，用的虚线填充……</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/pie-chart-method2.png" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个钱包界面练习，偷师自&lt;a href=&quot;https://dribbble.com/shots/2153963-Dompet-Wallet-App&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Dompet - Wallet App&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="sketch" scheme="https://duran.im/tags/sketch/"/>
+    
+      <category term="prototyping" scheme="https://duran.im/tags/prototyping/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS动画入门学习</title>
+    <link href="https://duran.im/2015/07/29/iOSAnimation101/"/>
+    <id>https://duran.im/2015/07/29/iOSAnimation101/</id>
+    <published>2015-07-29T10:19:24.000Z</published>
+    <updated>2018-08-06T06:45:24.108Z</updated>
+    
+    <content type="html"><![CDATA[<p>学习了林永坚老师的<a href="http://www.imooc.com/learn/392" target="_blank" rel="noopener">iOS动画入门</a>、<a href="http://www.imooc.com/learn/395" target="_blank" rel="noopener">iOS动画进阶</a>两个课程，包含iOS几种基础动画的实现方法。</p><a id="more"></a><h3 id="ios基本动画方法"><a class="markdownIt-Anchor" href="#ios基本动画方法"></a> iOS基本动画方法</h3><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/githubiOSAnimation.png" alt="image"></p><ul><li><h4 id="position-位置"><a class="markdownIt-Anchor" href="#position-位置"></a> position 位置</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateWithDuration(1, animations:&#123;</span><br><span class="line">self.greenSquare.center.x = self.view.bounds.width - self.greenSquare.center.x</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure></li><li><h4 id="opacity-透明度"><a class="markdownIt-Anchor" href="#opacity-透明度"></a> opacity 透明度</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateWithDuration(1, animations: &#123;</span><br><span class="line">    self.greenSquare.alpha = 0.1</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li><li><h4 id="scale-缩放"><a class="markdownIt-Anchor" href="#scale-缩放"></a> scale 缩放</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateWithDuration(1, animations: &#123;</span><br><span class="line">    self.greenSquare.transform = CGAffineTransformMakeScale(2.0, 2.0)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li><li><h4 id="color-变色"><a class="markdownIt-Anchor" href="#color-变色"></a> color 变色</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateWithDuration(1, animations: &#123;</span><br><span class="line">    self.greenSquare.backgroundColor = UIColor.redColor()</span><br><span class="line">    self.name.textColor = UIColor.whiteColor()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li><li><h4 id="rotation-旋转"><a class="markdownIt-Anchor" href="#rotation-旋转"></a> rotation 旋转</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func rotation()&#123;</span><br><span class="line">UIView.animateWithDuration(0.5, delay: 0, options: .CurveLinear, animations: &#123;</span><br><span class="line">     self.spin.transform = CGAffineTransformRotate(self.spin.transform, CGFloat(M_PI))</span><br><span class="line"> &#125;) &#123;(finished) -&gt; Void in</span><br><span class="line">         self.rotation()</span><br><span class="line"> &#125;&#125;</span><br><span class="line">override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">     super.viewDidAppear(animated)</span><br><span class="line"> self.rotation()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><h4 id="repeat-重复"><a class="markdownIt-Anchor" href="#repeat-重复"></a> repeat 重复</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateKeyframesWithDuration(1, delay: 0, options: .Repeat, animations: &#123;</span><br><span class="line">    self.redSquare.center.x = self.view.bounds.width - self.redSquare.center.x</span><br><span class="line">&#125;, completion: nil)</span><br><span class="line"></span><br><span class="line">UIView.animateKeyframesWithDuration(1, delay: 0, options: .Repeat | .Autoreverse, animations: &#123;</span><br><span class="line">    self.greenSquare.center.x = self.view.bounds.width - self.greenSquare.center.x</span><br><span class="line">    &#125;, completion: nil)</span><br></pre></td></tr></table></figure></li><li><h4 id="easing-缓动动画"><a class="markdownIt-Anchor" href="#easing-缓动动画"></a> easing 缓动动画</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateWithDuration(1, delay: 0, options: .CurveEaseIn, animations: &#123;</span><br><span class="line">self.redSquare.center.x = self.view.bounds.width - self.redSquare.center.x</span><br><span class="line">     &#125;, completion: nil)// EaseIn Animation</span><br><span class="line"> </span><br><span class="line">UIView.animateWithDuration(1, delay: 0, options: .CurveEaseOut, animations: &#123;</span><br><span class="line">self.greenSquare.center.x = self.view.bounds.width - self.greenSquare.center.x</span><br><span class="line">     &#125;, completion: nil)// EaseOut Animation</span><br><span class="line"> </span><br><span class="line">UIView.animateWithDuration(1, delay: 0, options: .CurveEaseInOut, animations: &#123;</span><br><span class="line">     self.yellowSquare.center.x = self.view.bounds.width - self.yellowSquare.center.x</span><br><span class="line">     &#125;, completion: nil)// EaseIn and EaseOut Animation</span><br></pre></td></tr></table></figure></li><li><h4 id="spring-弹性动画"><a class="markdownIt-Anchor" href="#spring-弹性动画"></a> spring 弹性动画</h4>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UIView.animateWithDuration(5, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0, options: nil, animations: &#123;</span><br><span class="line">    self.redSquare.center.x = self.view.bounds.width - self.redSquare.center.x</span><br><span class="line">&#125;, completion: nil)</span><br><span class="line"></span><br><span class="line">UIView.animateWithDuration(5, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1, options: nil, animations: &#123;</span><br><span class="line">    self.greenSquare.center.x = self.view.bounds.width - self.greenSquare.center.x</span><br><span class="line">    &#125;, completion: nil)</span><br></pre></td></tr></table></figure></li></ul><h4 id="what-i-learned"><a class="markdownIt-Anchor" href="#what-i-learned"></a> What I Learned</h4><p>通过3个小时学习</p><ol><li><p>对操作TableView和UIView动画基础代码比较熟悉</p></li><li><p>对缓动动画和弹性动画的原理和实现有了初步了解</p></li></ol><h3 id="旋转动画实例"><a class="markdownIt-Anchor" href="#旋转动画实例"></a> 旋转动画实例</h3><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/rotation.gif" alt="image"></p><p>rotation这个例子对我来说略微复杂的地方在于，为了实现重复执行360°旋转，老师在这里封装了一个函数来循环执行。事后需要从头补下课。</p><h3 id="缓动动画和弹性动画实例"><a class="markdownIt-Anchor" href="#缓动动画和弹性动画实例"></a> 缓动动画和弹性动画实例</h3><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/easing.gif" alt="image"></p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/spring.gif" alt="image"></p><p>easing和spring理解和书写都挺简单的，主要是要理解：</p><p><strong>缓动动画三种属性</strong></p><ul><li><p><code>option: .CurveEaseIn // 缓进</code></p></li><li><p><code>option: .CurveEaseOut // 缓出</code></p></li><li><p><code>option: .CurveEaseInOut // 缓进缓出</code></p></li></ul><p><strong>弹力动画两个重要属性（iOS7以上版本支持）</strong></p><ul><li><code>usingSpringWithDamping //阻尼大小</code></li><li><code>initialSpringVelocity //初始速度</code></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;学习了林永坚老师的&lt;a href=&quot;http://www.imooc.com/learn/392&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;iOS动画入门&lt;/a&gt;、&lt;a href=&quot;http://www.imooc.com/learn/395&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;iOS动画进阶&lt;/a&gt;两个课程，包含iOS几种基础动画的实现方法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="coding" scheme="https://duran.im/tags/coding/"/>
+    
+      <category term="swift" scheme="https://duran.im/tags/swift/"/>
+    
+      <category term="animation" scheme="https://duran.im/tags/animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>出租车司机的打卤面配方</title>
+    <link href="https://duran.im/2015/01/22/beijing-sourced-noodle/"/>
+    <id>https://duran.im/2015/01/22/beijing-sourced-noodle/</id>
+    <published>2015-01-22T15:38:35.000Z</published>
+    <updated>2018-08-06T06:45:24.105Z</updated>
+    
+    <content type="html"><![CDATA[<p>面试回来的路上我坐上一辆勉强愿意拉我的出租车，路过科学院南路某个路口的时候，师傅略带伤感地说这儿原来一片小饭馆都拆了，我说是啊我记得有一家面馆很好吃的。谁知师傅开启了自问自答的吃货传道模式。</p><p>“你知道他们家啥最好吃吗？打卤面啊！ ”</p><p>（好像这家是卖打卤面）</p><p>“这家的打卤面啊，是正宗的北京打卤面做法，而且还配别家都没有的凉拌地皮菜！ ”</p><p>（给我普及了一下什么是地皮菜）</p><p>“正宗的北京打卤面你知道什么讲究吗？面就不说了，关键是这卤子，正宗的北京打卤面，卤汁都能裹在面条上，吃完面保证你碗底不留汁水的，现在这些做打卤面压根就是汤泡面。 ”</p><p>（嗯嗯，我连忙点头）</p><p>“那你知道这卤子的秘诀是啥吗？ ”</p><p>（短暂暂停看我疑惑摇头，得意地继续）</p><p>“我跟你说，首先这五花肉得是薄片，先过水加香料煮一遍。其次这鸡蛋不用多，就一个鸡蛋，加点儿水搅拌，在锅里也能薄薄摊出一大片。然后，这汤底你得用那鸡汤，撇去油。最绝的你知道是啥吗？”</p><p>（认为我是战五渣的鄙视表情）</p><p>“这勾的芡，可不是普通玉米淀粉红薯粉，那得是绿豆粉！”</p><p>我一拍大腿应和：“我们川菜勾芡最高级的也是绿豆粉！”</p><p>（嘴角终于出现一丝欣赏）</p><p>作为一个身体力行的吃货我当然会问：“那咱现在还能去哪儿吃到正宗的老北京打卤面？”</p><p>师傅神秘一笑：“那当然是，只能自己做了。 ”</p><p>回家之后四下寻找了一番，大概<a href="http://home.meishichina.com/app2qplus.php?ac=recipe&amp;id=92837" target="_blank" rel="noopener">这个菜谱</a>最符合师傅的描述。</p>]]></content>
+    
+    <summary type="html">
+    
+      正宗的北京打卤面什么讲究知道吗？那当然是，只能自己做了。
+    
+    </summary>
+    
+    
+      <category term="recipe" scheme="https://duran.im/tags/recipe/"/>
+    
+      <category term="food" scheme="https://duran.im/tags/food/"/>
+    
+      <category term="taxistory" scheme="https://duran.im/tags/taxistory/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Github Profile Card Redesign</title>
+    <link href="https://duran.im/2014/12/17/github-profile-card/"/>
+    <id>https://duran.im/2014/12/17/github-profile-card/</id>
+    <published>2014-12-16T19:05:08.000Z</published>
+    <updated>2018-08-06T06:45:24.107Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近开始一个新项目，重设计一些网络服务的profile卡片。从Github开始，参考了<a href="http://octocard.in/" target="_blank" rel="noopener">octocard</a> 的布局，用的偶像Mike Bostock的repo资料哈哈。</p><a id="more"></a><p>最近开始一个新项目，重设计一些网络服务的profile卡片。从Github开始，参考了octocard<a href="http://octocard.in/" target="_blank" rel="noopener">octocard</a> 的布局，用的偶像Mike Bostock的repo资料哈哈。</p><p>update<br>octocard的作者大人亲自制作好了，有兴趣的同学可以直接使用<a href="https://github.com/zmmbreeze/octocard/blob/master/themes/azzura.less" target="_blank" rel="noopener">这款主题</a> 啦～</p><p>update</p><p>新增mini版和wide版</p><p><img src="http://duran.qiniudn.com/media/github-card-blue.png" alt="sceenshot"></p><p>blue/dark/image三种head</p><p><img src="http://duran.qiniudn.com/media/github-slim.png" alt="sceenshot"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近开始一个新项目，重设计一些网络服务的profile卡片。从Github开始，参考了&lt;a href=&quot;http://octocard.in/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;octocard&lt;/a&gt; 的布局，用的偶像Mike Bostock的repo资料哈哈。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="sketch" scheme="https://duran.im/tags/sketch/"/>
+    
+      <category term="github" scheme="https://duran.im/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用Automator实现开机自动连接VPN</title>
+    <link href="https://duran.im/2014/12/14/VPN-automator/"/>
+    <id>https://duran.im/2014/12/14/VPN-automator/</id>
+    <published>2014-12-14T09:33:52.000Z</published>
+    <updated>2018-08-06T06:45:24.104Z</updated>
+    
+    <content type="html"><![CDATA[<p>自从Dropbox被墙之后，同步就成了一件很肉的事，而我总是忘记开VPN把文件同步到最新。为了搞一个工作流必须保证Dropbox一打开就自动同步，于是利用Mac自带的Automator中执行AppleScript来完成一个开机自动连接动作。</p><a id="more"></a><h3 id="step-1"><a class="markdownIt-Anchor" href="#step-1"></a> STEP 1</h3><p>打开Automator，新建<code>应用程序</code></p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/automator-1.png" alt="Automator"></p><h3 id="step-2"><a class="markdownIt-Anchor" href="#step-2"></a> STEP 2</h3><p>在<code>实用工具</code>中选择<code>运行AppleScript</code></p><h3 id="step-3"><a class="markdownIt-Anchor" href="#step-3"></a> STEP 3</h3><p>在脚本编辑器中填入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;System Events&quot;</span><br><span class="line">    tell current location of network preferences</span><br><span class="line">        set VPN to &quot;MyVPN&quot;</span><br><span class="line">        set VPNactive to connected of current configuration of service VPN</span><br><span class="line">        if VPNactive then</span><br><span class="line">            disconnect service VPN</span><br><span class="line">        else</span><br><span class="line">            connect service VPN</span><br><span class="line">        end if</span><br><span class="line">    end tell</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure><p>其中<code>MyVPN</code>为你的VPN服务名称</p><h3 id="step-4"><a class="markdownIt-Anchor" href="#step-4"></a> STEP 4</h3><p>取个名字，例如<code>Ladder</code>保存到应用程序文件夹</p><h3 id="step-5"><a class="markdownIt-Anchor" href="#step-5"></a> STEP 5</h3><p>给这个App弄一个炫酷的图标。<br>画一个icon或者找一个icon图片，用预览打开全选-复制，再右键点击App，打开显示简介，选中左上角的图标，粘贴。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/automator-2.png" alt="new icon"></p><h3 id="step-6"><a class="markdownIt-Anchor" href="#step-6"></a> STEP 6</h3><p>拖动图标到Dock上，设置登录时打开。这样开机之后VPN就可以自动连接了，也可以在Dock上快速操作连接/断开VPN。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/automator-3.png" alt="dock status"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;自从Dropbox被墙之后，同步就成了一件很肉的事，而我总是忘记开VPN把文件同步到最新。为了搞一个工作流必须保证Dropbox一打开就自动同步，于是利用Mac自带的Automator中执行AppleScript来完成一个开机自动连接动作。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="AppleScript" scheme="https://duran.im/tags/AppleScript/"/>
+    
+      <category term="coding" scheme="https://duran.im/tags/coding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用Keynote做交互原型：模拟短网址服务</title>
+    <link href="https://duran.im/2014/11/27/zenurl-prototyping-with-keynote/"/>
+    <id>https://duran.im/2014/11/27/zenurl-prototyping-with-keynote/</id>
+    <published>2014-11-26T19:05:08.000Z</published>
+    <updated>2018-08-06T06:45:24.114Z</updated>
+    
+    <content type="html"><![CDATA[<p>想搭建一个自己的短网址服务，URL生成的交互想用翻转效果，用Keynote快速制作出了高保真原型动画。模拟了网址输入、按钮hover、按钮变形、文字和输入框翻转，生成的Gif帧率有点快，看Keynote要清楚些。</p><a id="more"></a><h3 id="static-box-version"><a class="markdownIt-Anchor" href="#static-box-version"></a> Static box version</h3><p><img src="http://duran.qiniudn.com/media/zenurl1.gif" alt="static box version"></p><p><a href="https://vimeo.com/112936520" target="_blank" rel="noopener">On vimeo</a></p><p><a href="https://github.com/cresstoo/ZenURL/raw/master/zenurl1.zip" target="_blank" rel="noopener">Download keynote file(keynote6+)</a></p><h3 id="flipping-box-version"><a class="markdownIt-Anchor" href="#flipping-box-version"></a> Flipping box version</h3><p><img src="http://duran.qiniudn.com/media/zenurl2.gif" alt="flipping box version"></p><p>(其实觉得这个版本有点太闹腾了……)</p><p><a href="https://vimeo.com/112936520" target="_blank" rel="noopener">On vimeo</a></p><p><a href="https://github.com/cresstoo/ZenURL/raw/master/zenurl2.zip" target="_blank" rel="noopener">Download keynote file(keynote6+)</a></p><p>构件动画设置如下。</p><p><img src="http://duran.qiniudn.com/media/screenshot.png" alt="sceenshot"></p><p>Keynote6里面的动画效果可以覆盖日常大部分交互效果，更精细化的动画就需要AE了。另外Keynote没有图层管理工具，不适合元件叠加过多的设计。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;想搭建一个自己的短网址服务，URL生成的交互想用翻转效果，用Keynote快速制作出了高保真原型动画。模拟了网址输入、按钮hover、按钮变形、文字和输入框翻转，生成的Gif帧率有点快，看Keynote要清楚些。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="animation" scheme="https://duran.im/tags/animation/"/>
+    
+      <category term="prototyping" scheme="https://duran.im/tags/prototyping/"/>
+    
+      <category term="keynote" scheme="https://duran.im/tags/keynote/"/>
+    
+  </entry>
+  
+</feed>

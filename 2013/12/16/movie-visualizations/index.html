@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="和电影有关的可视化作品"/>
+
+
+
+
+  <meta name="keywords" content="dataviz, I'M DURAN" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="I'M DURAN">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.6.0" />
+
+
+
+<link rel="canonical" href="https://duran.im/2013/12/16/movie-visualizations/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+  <script id="google_analytics">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-56488433-2', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 和电影有关的可视化作品 - I'M DURAN </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">I'M DURAN</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">I'M DURAN</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          和电影有关的可视化作品
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2013-12-16
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tldr"><span class="toc-text"> TL;DR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#影视文本内容分析"><span class="toc-text"> 影视文本内容分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#影视视听语言分析"><span class="toc-text"> 影视视听语言分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#影人和影片口碑分析"><span class="toc-text"> 影人和影片口碑分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可视化作为影片内容"><span class="toc-text"> 可视化作为影片内容</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <p>电影电视是一种最具表现力的媒介，对其进行数据挖掘和可视化分析的作品同样多姿多彩，可以是基于文本的（叙事、人物关系、台词），基于视听的（色彩、音响、动作、剪辑），还有基于创作者的（导演、演员、编剧），基于观众反馈的（票房、口碑），甚至直接用数据可视化作为影片内容。笔者收集整理一些不错的影视可视化作品，介绍给大家。</p>
+<a id="more"></a>
+<h2 id="tldr"><a class="markdownIt-Anchor" href="#tldr"></a> TL;DR</h2>
+<h3 id="影视文本内容分析"><a class="markdownIt-Anchor" href="#影视文本内容分析"></a> 影视文本内容分析</h3>
+<blockquote><p>Visualizing 500 Days of Summer<br>
+<a href="http://rasagy.github.io/500days/" target="_blank" rel="noopener">http://rasagy.github.io/500days/</a><br>
+作者：Rasagy Sharma</p>
+</blockquote>
+<p>介绍：《和莎莫的500天》是一部非线性叙事的爱情喜剧，设计师Rasagy Sharma抽取出影片中男女主人公关系的变化，并用可视化手段再现了这一有趣的叙事模型。</p>
+<p>他收集整理出的结构化数据包括：场景编号, 开始&amp;结束时间, 场景时长, 天数编号, 有趣台词, 场景介绍, 场景地点。</p>
+<p>动画图例说明：气泡和弧线出现顺序完全按照影片叙事顺序，气泡大小为场景时长，气泡颜色为人物三种关系（在一起、分开、偶遇），点击气泡还能查看一句最有趣的台词引用。</p>
+<p>制作工具为D3.js，实际上是气泡图（三个数值）+弧线路径的综合运用。作者blog里对整个制作过程进行了详细的描述，有兴趣可以深入阅读。</p>
+<blockquote><p>Rocky Morphology<br>
+<a href="http://fathom.info/rocky/" target="_blank" rel="noopener">http://fathom.info/rocky/</a><br>
+作者：<a href="http://Fathom.info" target="_blank" rel="noopener">Fathom.info</a></p>
+</blockquote>
+<p>介绍：史泰龙新片热映之际，洛基也即将登录百老汇舞台，Fathom团队的成员推出一部很棒的可视化作品，展现洛基系列中的关键叙事元素。分析方法参考自前苏联民俗学和语言学家普罗普的故事形态学理论，洛基的传奇故事十分符合普罗普提出的民间故事中“功能”的概念，于是Fathom团队从影片中提取出6个基本功能：对话、训练、蒙太奇（闪回）、预战斗、战斗、演职员表。</p>
+<p>通过对几种功能在每一部影片中出现的时间、时长的可视化，可以明显看出每部影片叙事特点：</p>
+<p>6部洛基都是以一段战斗开始（红色），前2部洛基叙事非常线性，用冗长的对话来进行铺垫，直到影片2/3处才开始一大段训练，接着闪回、预战斗，最后在战斗中结束影片。</p>
+<p>洛基3的叙事则有了明显的改变，片头的打斗吸引观众之后引入一段蒙太奇闪回，整部影片不断穿插一些小的战斗和训练，在影片高潮迎来最终之战。</p>
+<blockquote><p>Dissecting a Trailer: The Parts of the Film That Make the Cut<br>
+<a href="http://www.nytimes.com/interactive/2013/02/19/movies/awardsseason/oscar-trailers.html" target="_blank" rel="noopener">http://www.nytimes.com/interactive/2013/02/19/movies/awardsseason/oscar-trailers.html</a><br>
+作者：SHAN CARTER, AMANDA COX, MIKE BOSTOCK @ NYTimes</p>
+</blockquote>
+<p>介绍：2013年奥斯卡奖颁奖之前，纽约时报对5部获得最佳影片提名电影的预告片进行了可视化分析。通过对比预告片与整片镜头的位置、时长，来观察每部电影是如何用预告片来推销自己的：</p>
+<p>有的遵循了标准的预告片模式，依次介绍主要角色，基本保持与整片同步的叙事顺序。比如《乌云背后的幸福线》。</p>
+<p>有的则更像是预热的广告片，不像预告片那样专注在角色上，而是营造出整个影片的氛围，吊人胃口。比如《林肯》。</p>
+<p>作为唯一一部提名的外国电影，《爱》的预告片每个镜头都更长，甚至大胆地在最后使用了20秒的老人静坐画面，这种安静和未知充满张力。</p>
+<p>《逃离德黑兰》综合了两种调性：惊悚和好莱坞式的讽刺，惊悚意味着更快的剪辑切换，但轮到讽刺时镜头会稍长。</p>
+<p>《南国野兽》的预告片中呈现出一种世界的“诗意”，结束时留下一个开放性的问题，给人想象和讨论的空间，保持影片的神秘野性。</p>
+<p>这个可视化作品非常简洁，是D3基本图表的进阶运用。时间轴的横轴是预告片时间线，纵轴是素材在原片位置，bar的宽度代表时长，鼠标滑过每一个数值，右上角预告片切换至相应的定格画面。</p>
+<blockquote><p>Mad Drinks<br>
+<a href="http://www.maddrinkers.com/" target="_blank" rel="noopener">http://www.maddrinkers.com/</a><br>
+作者：Arianna Belotti, Sofia Girelli, Daniele Lupatini, Gianluca Malimpensa, Mattia Parietti, Aurelie Pellat</p>
+</blockquote>
+<p>介绍：艾美奖金球奖双料得主《广告狂人》展现了二十世纪六十年代大都会的浮夸与复杂人性，剧中充斥着香烟、烈酒和性场面。来自意大利的一个小组收集了第一季中人物角色的这些“坏行为”：时间、地点、主要人物关系、饮酒和吸烟行为，并特别为酒类添加了详细信息，以此制作了5幅信息图。所有的数据收集处理和呈现一共花了5天的时间。从图上可以看出，第7集角色们喝得最多也抽得最多。</p>
+<blockquote><p>Previously, On Arrested Development<br>
+<a href="http://apps.npr.org/arrested-development/" target="_blank" rel="noopener">http://apps.npr.org/arrested-development/</a><br>
+作者：Jeremy Bowers, Adam Cole, Danny DeBelius, Christopher Groskopf and Alyson Hurt @NPR</p>
+</blockquote>
+<p>介绍：风靡一时的喜剧《发展受阻》被砍7年之后，第四季在Netflix上回归。《发展受阻》拥有不少死忠粉丝的原因在于，其每集笑料经常来源于上一两集埋下的包袱，这种无处不在的互文性，吸引了资深喜剧迷的持续关注。（同样对该剧着迷的）NPR的数据新闻团队在新剧回归之前，把前三季中每个角色具有重复性和关联性的笑料，用可视化的手段展现了出来。新剧开播之后NPR持续更新了新一季的笑料。</p>
+<blockquote><p>Where have all the wildlings gone?<br>
+<a href="http://www.wherehaveallthewildlingsgone.com/" target="_blank" rel="noopener">http://www.wherehaveallthewildlingsgone.com/</a><br>
+作者：Nigel Evan Dennis</p>
+</blockquote>
+<p>介绍：设计师Nigel Evan Dennis为他热爱的史诗奇幻剧《冰与火之歌 权力的游戏》设计制作了一个站点，重新解析了剧中的场景、人物、地图、时间线、道具和重要概念。</p>
+<blockquote><p>ALL IN THE FAMILY TREE<br>
+<a href="http://fathom.info/allinthefamilytree/" target="_blank" rel="noopener">http://fathom.info/allinthefamilytree/</a><br>
+作者：<a href="http://Fathom.info" target="_blank" rel="noopener">Fathom.info</a></p>
+</blockquote>
+<p>介绍：同样来自Fathom成员的作品，为70年代经典肥皂剧ALL IN THE FAMILY及其7部衍生剧中所有的人物角色制作了一个家族树。每一个角色都以一片树叶来呈现，相同颜色的代表同一部剧。一条分支线连接了同一个角色在原生剧和衍生剧中的关系。</p>
+<blockquote><p>Moviegalaxies<br>
+<a href="http://moviegalaxies.com/" target="_blank" rel="noopener">http://moviegalaxies.com/</a><br>
+作者：Jermain Kaminski, Michael Schober</p>
+</blockquote>
+<p>介绍：Moviegalaxies是一个电影角色关系可视化搜索和展示的网站，输入影片名称或者影人，可以搜索到相关电影中角色之间的关系网络，快速查看到主要人物、人物之间如何关联。Moviegalaxies用三个指标来显示人物之间的关联度：</p>
+<p>中心性：betweenness，一个人物在一个连接上的重要性；</p>
+<p>关系度：degree，一个人物会有多少个连接；</p>
+<p>群组数：cluster，一个人物的关系网络有多少分支。</p>
+<p>根据人物出现场景、共同对话、对话频次，通过一定的算法计算出得出这些指标，可以参考Social Network Analysis相关论文。绘图工具则是基于Sigma.js这个开源图形库。</p>
+<blockquote><p>Geography, class, and fate: Passengers on the Titanic<br>
+<a href="http://storymaps.esri.com/stories/titanic/" target="_blank" rel="noopener">http://storymaps.esri.com/stories/titanic/</a><br>
+作者：ESRI地图公司</p>
+</blockquote>
+<p>介绍：该作品并不是对电影的直接分析，地图服务商ESRI根据维基百科中泰坦尼克乘客的真实情况制作了一幅地图，还原当时这艘巨船上不同舱位乘客的家乡、登船点、目的地、幸存情况等信息。比如影片中那对相拥等死的Straus夫妇。</p>
+<h3 id="影视视听语言分析"><a class="markdownIt-Anchor" href="#影视视听语言分析"></a> 影视视听语言分析</h3>
+<blockquote><p>CINEMETRICS<br>
+<a href="http://cinemetrics.fredericbrodbeck.de/" target="_blank" rel="noopener">http://cinemetrics.fredericbrodbeck.de/</a><br>
+作者：Frederic Brodbeck</p>
+</blockquote>
+<p>介绍：德国设计师Frederic Brodbeck令人惊艳的毕业作品，从试听语言的角度完全重构了数部经典电影。Brodbeck用Python开发了一个复杂的工具来完成电影数据提取分析工作，把光影配色、剪辑结构、动作模式、台词频率这些元素，按时间顺序组成一个圆环，每一个圆环就像影片的指纹一样，揭示出影片的影调、节奏，从中你能直观感受不同类型片的风格差异，也能观察到同一导演的风格痕迹。</p>
+<p>比如：动画片《汤普森大电影》的圆环呈现出五彩斑斓的颜色，《黑客帝国》则是标志性的暗绿色。动作片《007：大破量子危机》的圆环边缘起起伏伏，科幻片《2001：太空漫游》则非常平滑。</p>
+<p>作者在主页上大致介绍了项目制作方法：</p>
+<p>原始数据的处理：从DVD抓取视频、音频、字幕、章节数据，从IMDB抓取台词引用。</p>
+<p>抽取的电影数据：镜头数、平均镜头长度、动态画面测量（相对于静止画面来说）、光影配色。</p>
+<p>其中配色的算法：每部影片、每个章节、每个镜头甚至每一帧都可以被分为5种配色，然后组成该影片的色盘。</p>
+<p>更多的信息可以购买作者本人写的一本书，深入探讨了项目每个阶段的设想和实现。</p>
+<blockquote><p>Distribution of colours in movie posters between 1914 and 2012<br>
+<a href="http://www.vijayp.ca/movies/new_page.html" target="_blank" rel="noopener">http://www.vijayp.ca/movies/new_page.html</a><br>
+作者：Vijay Pandurangan</p>
+</blockquote>
+<p>介绍：同样是用Python进行色彩分析，Vijay Pandurangan的研究对象是1914年以来的电影海报配色。Pandurangan是怎么用可视化来揭示这些海报配色的特点呢？</p>
+<p>首先，忽略掉黑白两色，每个年份是一条水平的色彩条（采用的HSL颜色系统）。</p>
+<p>其次，每种色调的宽度代表该年所有海报中出现这种色调的数量，饱和度和亮度则代表所有符合这种平均色系的像素。这样就能看出每年用得最多的海报色是橘红色。</p>
+<p>再次，按照年份依次列出每年的色彩条，从上到下观察，你会发现近年来蓝色系的海报变得多了起来。</p>
+<p>然后，作者还设计了一套通用颜色系统下的色彩条（忽略掉饱和度、亮度），你会更加直观地观察到色彩的变化。</p>
+<p>最后，点击每个色彩条，你能进一步查看影片海报色分布的饼图。</p>
+<p>作者blog对可视化方法也进行了详细的描述，有兴趣的可以深入阅读。</p>
+<p>下面两个作品也是利用Python，对整部影片进行色彩抽取压缩，形成色彩“条形码”。Movie Barcode是只生成一张图片，而Film Strips在此基础上给出了每个色彩对应的影片截图。</p>
+<blockquote><p>Movie Barcode<br>
+<a href="http://moviebarcode.tumblr.com/" target="_blank" rel="noopener">http://moviebarcode.tumblr.com/</a></p>
+<p>Film Strips<br>
+<a href="http://roadtolarissa.com/film-strips/" target="_blank" rel="noopener">http://roadtolarissa.com/film-strips/</a><br>
+作者：Adam Pearce</p>
+</blockquote>
+<h3 id="影人和影片口碑分析"><a class="markdownIt-Anchor" href="#影人和影片口碑分析"></a> 影人和影片口碑分析</h3>
+<blockquote><p>Constellations of Directors and Their Stars<br>
+<a href="http://www.nytimes.com/newsgraphics/2013/09/07/director-star-chart/" target="_blank" rel="noopener">http://www.nytimes.com/newsgraphics/2013/09/07/director-star-chart/</a><br>
+作者：MIKE BOSTOCK, JENNIFER DANIEL, ALICIA DESANTIS and NICOLAS RAPOLD @NYTimes</p>
+</blockquote>
+<p>介绍：D3的创造者MIKE BOSTOCK加入纽约时报之后做了很多有意思的作品，比如这个项目：电影导演和他们的御用演员，展示了20世纪30年代到2010年代期间，一些知名导演与他们的御用演员之间的合作关系，形成一个个星座图。</p>
+<p>演员选取的标准是与导演至少合作过4部电影。让我们看看有哪些模式：</p>
+<p>一个导演只与一个演员保持长期合作，他们之间星座图是一个简单的菱形。比如斯皮尔伯格与哈里森·福特。</p>
+<p>一个导演与多个演员长期合作，例如王家卫与梁朝伟、张曼玉，韦斯·安德森与他的“黄金三角”威尔逊兄弟和比尔·莫瑞。他们之间的星座图是多角菱形。</p>
+<p>有些演员同时和两位导演保持长期合作关系，于是两个星座连接在了一起。例如处于科波拉和伍迪·艾伦之间的黛安·基顿。有趣的是伍迪·艾伦有四位爱将，他们之间却没有合作关联。</p>
+<p>还有一些多产的导演频繁与许多演员保持长期的合作，这些演员之间的合作也相当交错，于是整个星座出现杂乱如麻的形状。例如约翰·福特和黑泽明和他们数量庞大的演员阵容。</p>
+<blockquote><p>The Social Oscars<br>
+<a href="http://labs.brandwatch.com/oscars/" target="_blank" rel="noopener">http://labs.brandwatch.com/oscars/</a><br>
+作者：Brandwatch公司</p>
+</blockquote>
+<p>介绍：著名设计公司Brandwatch对2013年奥斯卡各个奖项的口碑分析，包括影评人、公众的不同评价和预测。</p>
+<h3 id="可视化作为影片内容"><a class="markdownIt-Anchor" href="#可视化作为影片内容"></a> 可视化作为影片内容</h3>
+<blockquote><p>Bear 71<br>
+<a href="http://bear71.nfb.ca/#/bear71" target="_blank" rel="noopener">http://bear71.nfb.ca/#/bear71</a><br>
+作者：National Film Board of Canada</p>
+</blockquote>
+<p>介绍：从2001-2009年之间，加拿大野生动物保护员跟踪记录了一头雌性灰熊的真实足迹，结合可视化地图制作成一部影片，展示这只灰熊生活的历程。</p>
+<p><em>该文首发于：<a href="http://djchina.org/2013/12/13/visualizing_movies/" target="_blank" rel="noopener">数据新闻网</a></em></p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://duran.im">cress</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://duran.im/2013/12/16/movie-visualizations/">https://duran.im/2013/12/16/movie-visualizations/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="http://7qn9uj.com1.z0.glb.clouddn.com/cress-rewardQR-wx.jpg" title="wechat">
+        </label>
+      
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/dataviz/">dataviz</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2014/05/09/gantt-chart/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">用Highcharts制作特殊甘特图</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2013/10/29/meowtaro-bedtime-story/">
+        <span class="next-text nav-default">喵太郎的睡前故事(1)</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:cress@duran.im" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://twitter.com/supercress" class="iconfont icon-twitter" title="twitter"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/cresstoo" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://instagram.com/kuresu" class="iconfont icon-instagram" title="instagram"></a>
+        
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2004 - 
+    
+    2020
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cress</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://duran.im/2013/12/16/movie-visualizations/';
+        this.page.identifier = '2013/12/16/movie-visualizations/';
+        this.page.title = '和电影有关的可视化作品';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//imduran.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

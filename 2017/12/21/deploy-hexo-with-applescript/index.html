@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="通过AppleScript快速创建和发布Hexo文章"/>
+
+
+
+
+  <meta name="keywords" content="hexo, I'M DURAN" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="I'M DURAN">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.6.0" />
+
+
+
+<link rel="canonical" href="https://duran.im/2017/12/21/deploy-hexo-with-applescript/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+  <script id="google_analytics">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-56488433-2', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 通过AppleScript快速创建和发布Hexo文章 - I'M DURAN </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">I'M DURAN</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">I'M DURAN</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          通过AppleScript快速创建和发布Hexo文章
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-12-21
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#回忆一下hexo的使用命令"><span class="toc-text"> 回忆一下Hexo的使用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo快速创建脚本"><span class="toc-text"> Hexo快速创建脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo一键发布脚本"><span class="toc-text"> Hexo一键发布脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考代码"><span class="toc-text"> 参考代码</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <p>因为给2018年定了一个要做<strong>输出型人</strong>的小目标，最近又开始对搁置了2年的博客不折腾不舒服斯基了。</p>
+<a id="more"></a>
+<p>先是由于换了电脑，重装nodejs和npm，Hexo从2.0升级到了3.0，按照<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="noopener">官方指引</a>完成了升级迁移。经过2年的变化，本人早就换了Bear作为主力笔记软件，还付费订阅了一年的服务。昨天折腾的时候发现Bear导出的Markdown文档meta信息乱掉了，分隔符会从<code>---</code> 变成 <code>- - - -</code>  从而导致发布显示错误。无奈之下只能放弃Bear作为Hexo文章编辑器，转向轻量级的专业Markdown编辑器Typora。</p>
+<p>万事大吉，可以开始写东西啦。</p>
+<h3 id="回忆一下hexo的使用命令"><a class="markdownIt-Anchor" href="#回忆一下hexo的使用命令"></a> 回忆一下Hexo的使用命令</h3>
+<ol>
+<li>打开终端，切换到Hexo的目录（有的人还会有切换env的步骤）</li>
+</ol>
+<p><code>$ cd ~/Hexoblog</code></p>
+<ol start="2">
+<li>输入命令行，创建新文章</li>
+</ol>
+<p><code>$ hexo new hello1984</code></p>
+<ol start="3">
+<li>
+<p><a href="http://xn--Typorahello1984-n892al72bgt6f.md" target="_blank" rel="noopener">用Typora打开hello1984.md</a>，编辑保存</p>
+</li>
+<li>
+<p>输入命令行，发布文章（有时候还需要清理缓存）</p>
+</li>
+</ol>
+<p><code>$ hexo clean</code></p>
+<p><code>$ hexo d -g</code></p>
+<p>开启和执行终端命令实在有点繁琐啊喂，于是在想能不能也跟<a href="http://duran.im/2014/12/14/VPN-automator/">以前一样通过Automator偷点懒</a>呢？于是做了点功课，参考这两个po主的代码（其实基本就拿来了）进行实现。其实尝试过程还是比较痛苦的，本意是想用iTerm而不是自带终端，谁知网上大多数iTerm的AppleScript脚本案例都在3.0版iTerm下报错了，建议还是用Mac系统自带的终端。</p>
+<p>具体方法就是打开Automator，选择<code>运行AppleScript</code>，粘贴下面的代码就OK了。</p>
+<h3 id="hexo快速创建脚本"><a class="markdownIt-Anchor" href="#hexo快速创建脚本"></a> Hexo快速创建脚本</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Finder&quot;</span><br><span class="line">	activate</span><br><span class="line">	display dialog &quot;先想个好标题&quot; default answer &quot;&quot;</span><br><span class="line">	set title to text returned of result as text</span><br><span class="line">end tell</span><br><span class="line">tell application &quot;Terminal&quot;</span><br><span class="line">	activate</span><br><span class="line">	if (count of windows) is 0 then</span><br><span class="line">		tell application &quot;System Events&quot;</span><br><span class="line">			keystroke &quot;n&quot; using &#123;command down&#125;</span><br><span class="line">		end tell</span><br><span class="line">	else</span><br><span class="line">		activate</span><br><span class="line">	end if</span><br><span class="line">	set win to window [0]</span><br><span class="line">	set currentTab to selected tab of win</span><br><span class="line">	-- 在当前 Tab 中执行改变目录的操作（需修改到自己的 Hexo 所在路径）</span><br><span class="line">	do script &quot;cd ~/Hexoblog&quot; in currentTab</span><br><span class="line">	do script &quot;hexo new &quot; &amp; title in currentTab</span><br><span class="line">	delay 1</span><br><span class="line">	do script &quot;open -a Typora source/_posts/&quot; &amp; title &amp; &quot;.md&quot; in currentTab</span><br><span class="line">	delay 3</span><br><span class="line">	close windows</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
+<h3 id="hexo一键发布脚本"><a class="markdownIt-Anchor" href="#hexo一键发布脚本"></a> Hexo一键发布脚本</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Terminal&quot;</span><br><span class="line">	do script &quot;&quot;</span><br><span class="line">	activate</span><br><span class="line">	set win to window [0]</span><br><span class="line">	set currentTab to selected tab of win</span><br><span class="line">	-- 在当前 Tab 中执行改变目录的操作（需修改到自己的 Hexo 所在路径）</span><br><span class="line">	do script &quot;cd ~/Hexoblog&quot; in currentTab</span><br><span class="line">	do script &quot;hexo clean &quot; in currentTab</span><br><span class="line">	delay 5</span><br><span class="line">	do script &quot;hexo d -g &quot; in currentTab</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
+<p>最后用Automator导出为应用程序，顺便DIY俩图标，放在Dock上，愉快地开始码字了。</p>
+<h3 id="参考代码"><a class="markdownIt-Anchor" href="#参考代码"></a> 参考代码</h3>
+<blockquote>
+<ul>
+<li><a href="">使用 AppleScript 制作自动脚本发布 Hexo</a></li>
+<li><a href="http://hunnble.github.io/2016/12/08/AppleScript%E5%AE%9E%E7%8E%B0hexo%E6%96%B0%E5%BB%BA-%E5%8F%91%E5%B8%83%E5%B7%A5%E4%BD%9C%E6%B5%81/" target="_blank" rel="noopener">AppleScript实现hexo新建/发布工作流</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://duran.im">cress</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://duran.im/2017/12/21/deploy-hexo-with-applescript/">https://duran.im/2017/12/21/deploy-hexo-with-applescript/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="http://7qn9uj.com1.z0.glb.clouddn.com/cress-rewardQR-wx.jpg" title="wechat">
+        </label>
+      
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/hexo/">hexo</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/12/26/mental-models/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Farnam Street心智模型栅格</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/12/02/riding-talk/">
+        <span class="next-text nav-default">乘车记20171201</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:cress@duran.im" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://twitter.com/supercress" class="iconfont icon-twitter" title="twitter"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/cresstoo" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://instagram.com/kuresu" class="iconfont icon-instagram" title="instagram"></a>
+        
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2004 - 
+    
+    2020
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cress</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://duran.im/2017/12/21/deploy-hexo-with-applescript/';
+        this.page.identifier = '2017/12/21/deploy-hexo-with-applescript/';
+        this.page.title = '通过AppleScript快速创建和发布Hexo文章';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//imduran.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

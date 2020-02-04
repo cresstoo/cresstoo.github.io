@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="持续记录如何折腾Hexo"/>
+
+
+
+
+  <meta name="keywords" content="Hexo, blog, I'M DURAN" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="I'M DURAN">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.6.0" />
+
+
+
+<link rel="canonical" href="https://duran.im/2018/05/24/mastering-hexo/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+  <script id="google_analytics">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-56488433-2', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> Hexo驯服记 - I'M DURAN </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">I'M DURAN</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">I'M DURAN</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Hexo驯服记
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-05-24
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-多机同步混乱"><span class="toc-text"> 一、多机同步混乱</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路git分支大法实现云端同步"><span class="toc-text"> 思路：Git分支大法实现云端同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步旧电脑上配置流程"><span class="toc-text"> 第一步，旧电脑上配置流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步新电脑建站流程"><span class="toc-text"> 第二步，新电脑建站流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步日常博客修改和发布"><span class="toc-text"> 第三步，日常博客修改和发布</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-第三方主题管理问题"><span class="toc-text"> 二、第三方主题管理问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-愚蠢的markdown标点符号错误"><span class="toc-text"> 三、愚蠢的markdown标点符号错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-hexo-renderer-marked插件没删干净"><span class="toc-text"> 四、hexo-renderer-marked插件没删干净</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五-github-pages-https的配置bug"><span class="toc-text"> 五、GitHub Pages HTTPS的配置bug</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <blockquote>
+<p>2014年开始折腾Hexo，感谢作者大大和社区，让我通过Hexo学习了Git的基本操作。</p>
+</blockquote>
+<h2 id="一-多机同步混乱"><a class="markdownIt-Anchor" href="#一-多机同步混乱"></a> 一、多机同步混乱</h2>
+<p>工作和家用两台电脑电脑或者旧电脑换新电脑，如果想要同时维护博客，就很容易发生同步混乱。</p>
+<h3 id="思路git分支大法实现云端同步"><a class="markdownIt-Anchor" href="#思路git分支大法实现云端同步"></a> 思路：Git分支大法实现云端同步</h3>
+<p>首先搞清楚Hexo系统下和个人有关的数据文件，实际只包括：</p>
+<ul>
+<li>根目录下的站点配置文件<code>_config.yml</code></li>
+<li>主题文件夹<code>theme/</code></li>
+<li>文章源文件夹<code>source/</code></li>
+<li>文章模板文件夹<code>scaffolds/</code></li>
+<li>依赖包数据文件<code>package.json</code></li>
+<li>忽略提交的配置文件<code>.gitignore</code></li>
+</ul>
+<p>因此如果需要更换电脑或者新增作业电脑，只需要保存好以上几个文件夹，将它们备份到云端可以一劳永逸解决换电脑之忧。但Dropbox、百度云盘这种文件同步系统是不怎么可靠的，一旦同步失败你都不知道哪个版本才是最新的。</p>
+<p>这里的最佳思路是在yourname.github.io仓库下使用2个分支，默认分支用于同步上面说的那些个人数据源文件，次分支来同步渲染静态页面（古典做法）。因为Github版本控制远远优于Dropbox。</p>
+<p><strong>具体步骤如下</strong></p>
+<h3 id="第一步旧电脑上配置流程"><a class="markdownIt-Anchor" href="#第一步旧电脑上配置流程"></a> 第一步，旧电脑上配置流程</h3>
+<p>（假设GitHub已有名为yourname.github.io仓库，旧电脑博客目录名为hexoblog，且已升级为最新Hexo3.x）</p>
+<ol>
+<li>
+<p>在GitHub的yourname.github.io上新建hexo分支，并设置为默认分支</p>
+<p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/defaultbranch.png" alt=""></p>
+</li>
+<li>
+<p>编辑本地配置文件<code>_config.yml</code>，将默认分支设置为master</p>
+</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">git@github.com:yourname/yourname.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>
+<p>删除根目录和主题目录下的.git文件夹（*主题目录这个有坑，解决办法见后）</p>
+</li>
+<li>
+<p>编辑根目录下的<code>.gitignore</code>  ，添加一行<code>public/</code>，目的是不用重复提交静态网页（已经在master分支了）</p>
+</li>
+<li>
+<p>将本地源文件更新到GitHub</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="meta">#</span><span class="bash"> 初始化git</span></span><br><span class="line">git add. </span><br><span class="line">git commit -m "new branch"</span><br><span class="line">git remote add origin git@github.com:yourname/yourname.github.io.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> 关联远端hexo分支</span></span><br><span class="line">git push -u origin master</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果报错，换git pull --rebase origin master</span></span><br></pre></td></tr></table></figure>
+<h3 id="第二步新电脑建站流程"><a class="markdownIt-Anchor" href="#第二步新电脑建站流程"></a> 第二步，新电脑建站流程</h3>
+<ol>
+<li>
+<p>安装配置Git环境，不赘述了</p>
+</li>
+<li>
+<p>建议使用SSH而不是HTTP方式来访问服务器，因此需要更新本机SSH key到GitHub账号下，参考<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/" target="_blank" rel="noopener">官方指南</a>即可。</p>
+</li>
+<li>
+<p>安装Nodejs（或者当然最好用nvm来管理Nodejs）</p>
+</li>
+<li>
+<p>下载博客源文件</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:yourname/yourname.github.io.git</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>安装Hexo，但不要执行hexo init初始化，否则就重复建站了</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果使用git submodule管理主题，加一步：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git submodule update --init --recursive</span></span><br></pre></td></tr></table></figure>
+<p>至此新旧电脑数据完全一致</p>
+<h3 id="第三步日常博客修改和发布"><a class="markdownIt-Anchor" href="#第三步日常博客修改和发布"></a> 第三步，日常博客修改和发布</h3>
+<ol>
+<li>
+<p>在hexo目录下执行<code>git checkout hexo</code>，保证当前本地分支为默认分支hexo</p>
+</li>
+<li>
+<p>确认本地源文件更新为最新</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果使用git submodule管理主题，加一步：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git submodule update</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>
+<p>进行正常的新建或者修改博客，比如新建一篇博客 <code>hexo new post</code>，或者修改配置文件</p>
+</li>
+<li>
+<p>发布所有修改到GitHub hexo分支</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add . </span><br><span class="line">git commit -m "add a new post" </span><br><span class="line">git push origin hexo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这里不是push到master，别搞错了</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>不用切换分支，将渲染好的静态文件发布到GitHub master分支，完成网站发布</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line"><span class="meta">#</span><span class="bash">清除缓存</span></span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者hexo g -d</span></span><br></pre></td></tr></table></figure>
+<p>实际上还有一些省事的办法，只是为了加深对git命令的记忆，我还是选择了这个解决方案。</p>
+<p>参考资料</p>
+<blockquote>
+<p><a href="https://www.zhihu.com/question/21193762" target="_blank" rel="noopener">使用hexo，如果换了电脑怎么更新博客修改</a></p>
+<p><a href="http://zealscott.com/posts/1708/" target="_blank" rel="noopener">hexo多设备同步与版本控制实现</a></p>
+<p><a href="https://yaro97.github.io/2017/01/07/Hexo-Github%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="noopener">Hexo-Github建博客教程</a></p>
+</blockquote>
+<h2 id="二-第三方主题管理问题"><a class="markdownIt-Anchor" href="#二-第三方主题管理问题"></a> 二、第三方主题管理问题</h2>
+<p>Hexo第三方主题大多数发布在GitHub上，然而如果采用git clone下载到theme文件夹内，由于这些theme本身就是一个repo，自带的.git会和Hexo的母.git冲突，本地修改之后，无法push到GitHub远端。</p>
+<p>如果你坚持使用git clone或者直接下载release包，那么可以简单粗暴删掉主题文件夹下的 .git 和.gitignore文件，坏处是如果原主题作者更新了你得自己再次手动下载重新配置主题文件。如果你不记得之前的配置改动，比如某个css里几个高度，可能就会导致主题乱掉。</p>
+<p>另一种更优雅的办法是使用<code>git submodule</code>，把主题仓库当作博客仓库的一个子仓库，单独进行版本管理和同步。</p>
+<ol>
+<li>
+<p>Fork 一份作者的主题到自己的GitHub上，例如even这个主题</p>
+</li>
+<li>
+<p>为主题创建一个submodule</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/ahonn/hexo-theme-even themes/even</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>
+<p>创建完毕后，GitHub上的even会多一个尾巴</p>
+<p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/submodule.png" alt=""></p>
+</li>
+<li>
+<p>至此submodule配置完毕，今后在不同电脑之前同步主题只需要</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line">git submodule update</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果是全新电脑安装完hexo之后 再执行一步：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git submodule update --init</span></span><br></pre></td></tr></table></figure>
+<p>最后只剩一个问题，如果原作者更新了主题，就采取常规git fork合并冲突的方法。一般很少更新，就不详细描述了。</p>
+<p>参考资料</p>
+<blockquote>
+<p><a href="http://www.swiftyper.com/2017/07/25/managing-hexo-theme-using-submodule" target="_blank" rel="noopener">使用 submodule 管理 Hexo 主题</a></p>
+<p><a href="https://qbug.cf/2017/07/31/submodule-%E8%A7%A3%E5%86%B3-hexo-%E4%B8%BB%E9%A2%98%E5%BA%93%E6%9B%B4%E6%96%B0/" target="_blank" rel="noopener">Submodule 解决 Hexo 主题库更新</a></p>
+<p><a href="https://blog.csdn.net/lw_chen/article/details/51239657" target="_blank" rel="noopener">Fork别人的主题代码 原作者更新后如何同步</a></p>
+</blockquote>
+<h2 id="三-愚蠢的markdown标点符号错误"><a class="markdownIt-Anchor" href="#三-愚蠢的markdown标点符号错误"></a> 三、愚蠢的markdown标点符号错误</h2>
+<p>这是一个很蠢的问题，Hexo生成的新mardown文件，会自动有一个tag行，但<code>tag: []</code>和后面的标签、方括号之间是应该要有空格，否则提交渲染的时候会提示渲染失败。</p>
+<p><strong>错误示范</strong></p>
+<p>单个标签tag:abc</p>
+<p>多个标签tag:[abc, def]</p>
+<p><strong>正确示范</strong></p>
+<p>单个标签tag: abc</p>
+<p>多个标签tag: [abc, def]</p>
+<p>类似蠢问题，<a href="http://www.swiftyper.com/2017/07/30/hexo-tip-do-not-using-square-brace-in-title/" target="_blank" rel="noopener">这位也遇到了</a>，就是不要在标题行用方括号。</p>
+<h2 id="四-hexo-renderer-marked插件没删干净"><a class="markdownIt-Anchor" href="#四-hexo-renderer-marked插件没删干净"></a> 四、hexo-renderer-marked插件没删干净</h2>
+<p>这算是一个hexo renderer的小bug，升级Hexo3.x以后，旧版hexo-renderer-marked需要手工卸载删除，否则会导致文章渲染失败。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br></pre></td></tr></table></figure>
+<h2 id="五-github-pages-https的配置bug"><a class="markdownIt-Anchor" href="#五-github-pages-https的配置bug"></a> 五、GitHub Pages HTTPS的配置bug</h2>
+<p>GitHub Pages开始支持免费解析HTTPS，但按照官方指导会出现<code>Enforce HTTPS</code> 选项置灰无法勾选的情况。这应该是个bug。</p>
+<p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/enforcehttps01.png" alt=""></p>
+<p><strong>问题解决</strong></p>
+<ol>
+<li>首先到域名服务商那里删掉以前DNS的A记录，重新解析到新的IP地址</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">185.199.108.153</span><br><span class="line">185.199.109.153</span><br><span class="line">185.199.110.153</span><br><span class="line">185.199.111.153</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p>尽管你的域名服务商表示已经解析完成，但GitHub可能要过2天左右才能完成解析，如果一直显示：</p>
+<blockquote>
+<p>Enforce HTTPS — Not yet available for your site because the certificate has not finished being issued</p>
+</blockquote>
+</li>
+<li>
+<p>你就再等1天警告才会消失 ，但<code>Enforce HTTPS</code> 选项可能依然是灰的，这就是GitHub的bug了。这时候需要删掉已经填写好的域名，点一次<code>Save</code>，方框就可以勾选了</p>
+</li>
+<li>
+<p>重新添加一次域名，同时勾选上<code>Enforce HTTPS</code> 之后再点<code>Save</code>。成功</p>
+</li>
+<li>
+<p>之后https可以访问了但会提示证书无效，依然要过一段时间才能变绿</p>
+<p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/enforcehttps02.png" alt=""></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://duran.im">cress</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://duran.im/2018/05/24/mastering-hexo/">https://duran.im/2018/05/24/mastering-hexo/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="http://7qn9uj.com1.z0.glb.clouddn.com/cress-rewardQR-wx.jpg" title="wechat">
+        </label>
+      
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Hexo/">Hexo</a>
+            
+              <a href="/tags/blog/">blog</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/03/12/growth-fast-and-slow/">
+        <span class="next-text nav-default">失业庐中记：成长，快与慢</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:cress@duran.im" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://twitter.com/supercress" class="iconfont icon-twitter" title="twitter"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/cresstoo" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://instagram.com/kuresu" class="iconfont icon-instagram" title="instagram"></a>
+        
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2004 - 
+    
+    2020
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cress</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://duran.im/2018/05/24/mastering-hexo/';
+        this.page.identifier = '2018/05/24/mastering-hexo/';
+        this.page.title = 'Hexo驯服记';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//imduran.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+  
+
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
