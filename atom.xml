@@ -229,6 +229,31 @@
   </entry>
   
   <entry>
+    <title>2119，清洁空气</title>
+    <link href="https://duran.im/2017/11/24/clean-air-2119/"/>
+    <id>https://duran.im/2017/11/24/clean-air-2119/</id>
+    <published>2017-11-24T09:06:56.000Z</published>
+    <updated>2020-05-31T11:06:03.388Z</updated>
+    
+    <content type="html"><![CDATA[<p>2069年，大气和植被被一场事故严重污染，人类逐渐失去纯天然的清洁空气。</p><p>50年后，清洁空气成为一种需要购买才能得到的消费品，科技的发展并不如人意，虽然人造空气已能量产，但仅能满足日常生活所需。</p><p>2119年的一个周五入夜，北京普通上班族小王在忙碌一周之后来到位于三里屯的酒吧街，花180元点上一罐5年前的青岛烟台混合空气，就可以消磨整个午夜。</p><p>当然如果你早点下班去大超市购买一些开架货会便宜不少，只是很难抢得过那些退休在家带娃的老人，去晚了货架上只剩下些廊坊甚至唐山空气。</p><p>酒吧街附近的超市也经常以次充好，比如用北京本地人造空气混入丹麦空气中卖给客人。北京环保局清洁空气督查队的任务异常繁重，尤其是勾兑出来的劣质空气，通常很难检测。</p><p>也有高明的商人囤积居奇，品鉴年份久远、指定产区的单一品种清洁空气，成为高档娱乐场所的高档享受。</p><p>今天是张氏夫妻结婚10周年的纪念日，夫妻俩早早用App预约了皇城根脚下西餐厅1999元/位的高级情侣套餐。之所以选择这里，是因为套餐里会赠送两杯30年窖藏的大理空气，折算下来餐厅老板算是非常良心了。</p><p>顺着这皇城根拐几道弯，在氤氲荡漾的胡同深处，京城最热门的私人会所莫过于“平流层”了。</p><p>今晚投资公司老板李总带着几个合伙人来到“平流层”，刚刚入座，穿戴礼服的男侍应生，哦不对，是专业伺气师，依次呈上被客人点得最多的几款空气，操着上海口音的普通话冷淡地介绍：“45年日月潭，55年夏威夷，65年北海道。”</p><p>李总摆了摆手，小声质询：“小赵，我可是知道你们最近有批好家伙，不拿出来给我们品品？”小赵嘴角微微一抿：“几位客人里厢请。”</p><p>众人进入极为私密的厢房，伺气师小赵打开一面墙壁上的开关，墙内露出一箱透明酒柜，人脸瞳孔指纹三重识别后，酒柜才徐徐开启。</p><p>小赵小心翼翼端出一瓶最严密封装的空气，环顾四周，挺直腰板，一字一句说道：“100年，中南海。”</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;2069年，大气和植被被一场事故严重污染，人类逐渐失去纯天然的清洁空气。&lt;/p&gt;
+&lt;p&gt;50年后，清洁空气成为一种需要购买才能得到的消费品，科技的发展并不如人意，虽然人造空气已能量产，但仅能满足日常生活所需。&lt;/p&gt;
+&lt;p&gt;2119年的一个周五入夜，北京普通上班族小王在忙碌
+      
+    
+    </summary>
+    
+    
+      <category term="story" scheme="https://duran.im/tags/story/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sketch练习 - 银翼杀手2049</title>
     <link href="https://duran.im/2017/11/17/blade-runner-2049-sketch/"/>
     <id>https://duran.im/2017/11/17/blade-runner-2049-sketch/</id>
@@ -421,28 +446,6 @@
       <category term="sketch" scheme="https://duran.im/tags/sketch/"/>
     
       <category term="github" scheme="https://duran.im/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用Automator实现开机自动连接VPN</title>
-    <link href="https://duran.im/2014/12/14/VPN-automator/"/>
-    <id>https://duran.im/2014/12/14/VPN-automator/</id>
-    <published>2014-12-14T09:33:52.000Z</published>
-    <updated>2018-08-06T06:45:24.104Z</updated>
-    
-    <content type="html"><![CDATA[<p>自从Dropbox被墙之后，同步就成了一件很肉的事，而我总是忘记开VPN把文件同步到最新。为了搞一个工作流必须保证Dropbox一打开就自动同步，于是利用Mac自带的Automator中执行AppleScript来完成一个开机自动连接动作。</p><a id="more"></a><h3 id="step-1"><a class="markdownIt-Anchor" href="#step-1"></a> STEP 1</h3><p>打开Automator，新建<code>应用程序</code></p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/automator-1.png" alt="Automator"></p><h3 id="step-2"><a class="markdownIt-Anchor" href="#step-2"></a> STEP 2</h3><p>在<code>实用工具</code>中选择<code>运行AppleScript</code></p><h3 id="step-3"><a class="markdownIt-Anchor" href="#step-3"></a> STEP 3</h3><p>在脚本编辑器中填入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;System Events&quot;</span><br><span class="line">    tell current location of network preferences</span><br><span class="line">        set VPN to &quot;MyVPN&quot;</span><br><span class="line">        set VPNactive to connected of current configuration of service VPN</span><br><span class="line">        if VPNactive then</span><br><span class="line">            disconnect service VPN</span><br><span class="line">        else</span><br><span class="line">            connect service VPN</span><br><span class="line">        end if</span><br><span class="line">    end tell</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure><p>其中<code>MyVPN</code>为你的VPN服务名称</p><h3 id="step-4"><a class="markdownIt-Anchor" href="#step-4"></a> STEP 4</h3><p>取个名字，例如<code>Ladder</code>保存到应用程序文件夹</p><h3 id="step-5"><a class="markdownIt-Anchor" href="#step-5"></a> STEP 5</h3><p>给这个App弄一个炫酷的图标。<br>画一个icon或者找一个icon图片，用预览打开全选-复制，再右键点击App，打开显示简介，选中左上角的图标，粘贴。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/automator-2.png" alt="new icon"></p><h3 id="step-6"><a class="markdownIt-Anchor" href="#step-6"></a> STEP 6</h3><p>拖动图标到Dock上，设置登录时打开。这样开机之后VPN就可以自动连接了，也可以在Dock上快速操作连接/断开VPN。</p><p><img src="http://7qn9uj.com1.z0.glb.clouddn.com/media/automator-3.png" alt="dock status"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;自从Dropbox被墙之后，同步就成了一件很肉的事，而我总是忘记开VPN把文件同步到最新。为了搞一个工作流必须保证Dropbox一打开就自动同步，于是利用Mac自带的Automator中执行AppleScript来完成一个开机自动连接动作。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="AppleScript" scheme="https://duran.im/tags/AppleScript/"/>
-    
-      <category term="coding" scheme="https://duran.im/tags/coding/"/>
     
   </entry>
   
