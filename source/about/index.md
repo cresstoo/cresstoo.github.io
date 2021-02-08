@@ -3,9 +3,7 @@ layout: page
 ---
 ### 关于我
 
-我是DuRan，网名cress，[INTP](https://zh.wikipedia.org/wiki/INTP)/[INTJ](https://zh.wikipedia.org/wiki/INTJ)+[RAI](https://zh.wikipedia.org/wiki/%E9%9C%8D%E7%88%BE%E8%98%AD%E5%85%AD%E9%82%8A%E5%BD%A2)，LGBT🌈，拥有一只[黑猫](https://www.instagram.com/p/BK0W7-oA1qT/?taken-by=kuresu)。大学专业影视学，10年产品经理，目前因病待业家中。终极梦想是成为某种手制工人，世界和平。
-
-业余爱好：精品咖啡，miniature，Ukulele，写作，摄影，追星，对人文艺术和社科经管都有广泛阅读兴趣，相信技术提升工作和生活效率，美能净化心灵。
+我是杜然，现充次元网名cress（追星次元******），[INTP](https://zh.wikipedia.org/wiki/INTP)/[INTJ](https://zh.wikipedia.org/wiki/INTJ)+[RAI](https://zh.wikipedia.org/wiki/%E9%9C%8D%E7%88%BE%E8%98%AD%E5%85%AD%E9%82%8A%E5%BD%A2)，LGBT🌈，拥有一只[黑猫](https://www.instagram.com/p/BK0W7-oA1qT/?taken-by=kuresu)。专业是影视学，曾经是一名互联网产品经理，先已病退。生活过的城市北京/上海，目前定居成都，2016年开始接触精品咖啡，拥有SCA Barista和Roasting中级证书，立志成为一名专业的咖啡烘焙师，拥有自己的烘焙坊。2018年开始追星，目前为止十分快乐。
 
 ### 本站黑历史
 
