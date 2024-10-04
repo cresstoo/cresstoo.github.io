@@ -1,2 +1,4 @@
-personal blog driven by Hexo.
-(2014-2024)[duran.im](http://duran.im)
+[http://duran.im](http://duran.im)
+-----------
+personal blog(2014-2024) driven by [Hexo.js](https://github.com/hexojs/hexo).
+
